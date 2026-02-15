@@ -1,10 +1,10 @@
 export class Project {
-    static #allProjects = [];
+    static #allProjects = {};
     #list = {};
     constructor(name = 'default') {
         this.#list[name] = [];
         this.name = name;
-        Project.#allProjects.push(this);
+        Project.#allProjects[name] = this.#list;
     }
 
     addProject(name) {
@@ -12,12 +12,15 @@ export class Project {
     }
 
     addTask(task) {
+        if(!task) return;
         this.#list[this.name].push(task);
     }
 
     removeTask(taskId) {
         this.#list[this.name] = this.#list[this.name].filter(task => task.id !== taskId);
     }
+
+    
 
     get showList() {
         return structuredClone(this.#list);
