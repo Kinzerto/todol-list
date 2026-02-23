@@ -7,8 +7,9 @@ const projects = document.querySelector('.projects');
 const tasks = document.querySelector('.tasks');
 const projectButton = document.querySelector('button');
 
+const addProject = document.querySelector('.addProject');
 
-// createProject(projectButton);
+createProject(addProject);
 
 document.addEventListener('DOMContentLoaded',display);
 

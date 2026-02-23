@@ -4,11 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Todo List</title>
 </head>
 
 <body>
+    <div class="container">
+        <header></header>
+        <div class="sidebar">
+            <button class="addTask">
+                <span class="addIcon"></span>
+                Add task
+            </button>
+            <button class="todayTask">
+                <span class="todayIcon"></span>
+                Today
+            </button>
+            <button class="upcomingTask">
+                <span class="upcomingIcon"></span>
+                Upcoming
+            </button>
+            <button class="completeTask">
+                <span class="completeIcon"></span>
+                Completed
+            </button>
 
+            <div class="projects">
+                <div class="projectTitle">
+                    <span>My Projects</span>
+                    <button class="addProject">
+                        <span>+</span>
+                    </button>
+                </div>
+                <div class="addedProjects">
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="tasks"></div>
+        </div>
+    </div>
 </body>
 
 </html>
