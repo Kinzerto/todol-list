@@ -100,6 +100,7 @@ $poppins: 'Poppins', sans-serif;
             }
 
             .addedProjects {
+
                 // border: 1px solid $black;
                 button {
                     // position: relative;
@@ -115,5 +116,13 @@ $poppins: 'Poppins', sans-serif;
 
     .content {
         grid-area: content;
+
+        .tasks {}
+
+        button {
+            border-style: none;
+            background-color: transparent;
+            cursor: pointer;
+        }
     }
 }

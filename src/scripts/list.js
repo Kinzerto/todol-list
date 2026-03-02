@@ -45,9 +45,10 @@ export class AddTask {
     }
 }
 
+const content = document.querySelector('.content');
 const addedProjects = document.querySelector('.addedProjects');
 const tasks = document.querySelector('.tasks');
-tasks.textContent = 'mdwdomwd';
+// tasks.textContent = 'mdwdomwd';
 
 export function createProject(element) {
     element.addEventListener('click', (e) => {
@@ -78,8 +79,9 @@ function displayProject(data) {
 function displayTasks(array) {
     tasks.replaceChildren();
     //adds a button to add tasks to the project
-    createElement('button', 'addTaskBtn', 'Add Task', tasks).addEventListener('click', () => {
+    createElement('button', 'addTaskBtn', 'Add Task', content).addEventListener('click', () => {
         const title = prompt('Task Title');
+        
         if (!title) return;
         const newTask = new AddTask(title);
         array.push(newTask);
