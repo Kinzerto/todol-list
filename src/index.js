@@ -1,4 +1,4 @@
-import { Project, createProject, AddTask} from "./scripts/list.js";
+import { Project, createProject, AddTask } from "./scripts/list.js";
 import { createElement } from "./utils/createElement.js";
 import { display } from "./scripts/display.js";
 import './styles/reset.scss';
@@ -9,9 +9,10 @@ const projectButton = document.querySelector('button');
 
 const addProject = document.querySelector('.addProject');
 
-createProject(addProject);
+// createProject(addProject);
 
-document.addEventListener('DOMContentLoaded',display);
+document.addEventListener('DOMContentLoaded', display);
+
 
 
 
