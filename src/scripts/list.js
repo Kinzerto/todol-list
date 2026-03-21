@@ -81,16 +81,19 @@ function projectDisplay(data) {
 
 // display tasks
 function tasksDisplay(data) {
-
     tasks.replaceChildren();
     addButton.replaceChildren();
     titleContainer.replaceChildren();
 
     const title = createElement('div', 'projectTitle', data.name, titleContainer);
     console.log(data);
-    //adds a button to add tasks to the project
-    createElement('div', 'plusIcon', "\uFF0B", addButton)
-    createElement('button', 'addTaskBtn', 'Add Task', addButton).addEventListener('click', () => {
+    // ADD TASK BUTTON CONTAINER
+    const addButtonContainer = createElement('div', 'addButtonContainer', '', addButton);
+    //ADD TASK BUTTON
+    createElement('div', 'plusIcon', "\uFF0B", addButtonContainer);
+    createElement('button', 'addTaskBtn', 'Add Task', addButtonContainer);
+    
+    addButtonContainer.addEventListener('click', () => {
         const title = prompt('Task Title');
 
         if (!title) return;
@@ -98,9 +101,7 @@ function tasksDisplay(data) {
         data.addTask(newTask);
         console.log(data);
         tasksDisplay(data);
-
     });
-
 
     console.log(data.showList);
     data.showList.forEach((element, index) => {
@@ -113,9 +114,9 @@ function tasksDisplay(data) {
 
         });
     });
-
 }
 
+//MODALS
 const modal = document.getElementById('modal');
 const openBtn = document.getElementById('openModal');
 const closeBtn = document.getElementById('closeModal');
@@ -135,7 +136,7 @@ overlay.addEventListener('click', () => {
     modal.classList.remove('active');
 });
 
-const form = document.getElementById('myForm');
+const form = document.getElementById('projectForm');
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
