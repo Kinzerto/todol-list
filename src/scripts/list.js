@@ -116,6 +116,8 @@ function tasksDisplay(data) {
     });
 }
 
+createProject('Default');
+
 //MODALS
 const modal = document.getElementById('modal');
 const openBtn = document.getElementById('openModal');
@@ -147,3 +149,5 @@ form.addEventListener('submit', (e) => {
 
     modal.classList.remove('active');
 });
+
+// modal 2
