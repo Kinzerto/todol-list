@@ -56,17 +56,15 @@ const addButton = document.querySelector('.addButton');
 const titleContainer = document.querySelector('.title')
 
 // For adding task(MODAL)
-const container2 = document.querySelector('.container2');
-
 const addTaskModalContainer = document.getElementById('addTaskModalContainer');
 const cancel = document.getElementById('cancel');
 const addTaskForm = document.querySelector('.AddTaskForm');
 
-
+let currentProject = null;
 // creating project
-function createProject(project) {
-    if (!project) return;
-    const newProject = new Project(project);
+function createProject(name) {
+    if (!name) return;
+    const newProject = new Project(name);
     // projectDisplay(newProject);
 
     const DOMButtons = createElement('button', 'project', '', addedProjects);
@@ -74,18 +72,18 @@ function createProject(project) {
     DOMButtons.append(newProject.name);
 
     DOMButtons.addEventListener('click', () => {
-        const currentProject = newProject;
-        tasksDisplay(currentProject);
+        currentProject = newProject;
+        tasksDisplay();
     });
 }
-
 // display tasks
-function tasksDisplay(currentProject) {
+function tasksDisplay() {
+    if (!currentProject) return;
+
     tasks.replaceChildren();
     addButton.replaceChildren();
     titleContainer.replaceChildren();
     const title = createElement('div', 'projectTitle', currentProject.name, titleContainer);
-    console.log(currentProject);
     // ADD TASK BUTTON CONTAINER
     const addButtonContainer = createElement('div', 'addButtonContainer', '', addButton);
     //ADD TASK BUTTON
@@ -95,53 +93,22 @@ function tasksDisplay(currentProject) {
     //open modal
     addButtonContainer.addEventListener('click', () => {
         addTaskModalContainer.classList.add('show')
-    });
-    // form
-    addTaskForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const formData = new FormData(addTaskForm);
-        const inputData = {
-            title: formData.get("title"),
-            description: formData.get("descrip"),
-            date: formData.get("date"),
-            priority: formData.get("priority")
-        };
-        if (!inputData.title) return;
-        const newTask = new AddTask(inputData.title, inputData.description, inputData.date, inputData.priority);
-        currentProject.addTask(newTask);
-        tasksDisplay(currentProject);
-        console.log(currentProject); // ✅ collected data 
-        addTaskModalContainer.classList.remove('show');
-        addTaskForm.reset();
+        addButton.classList.add('hideAddButton');
     });
     //close modal
     cancel.addEventListener('click', (e) => {
         e.preventDefault();
         addTaskModalContainer.classList.remove('show');
         addTaskForm.reset();
+        addButton.classList.remove('hideAddButton');
     });
-    //submit modal inputs
 
-
-    // addButtonContainer.addEventListener('click', () => {
-    //     const title = prompt('Task Title');
-
-    //     if (!title) return;
-    //     const newTask = new AddTask(title);
-    //     data.addTask(newTask);
-    //     console.log(data);
-    //     tasksDisplay(data);
-    // });
-
-    console.log(currentProject.showList);
-    currentProject.showList.forEach((element, index) => {
-        const task = createElement('div', '', element.title, tasks);
-        task.addEventListener('click', () => {
-
-            currentProject.toggleTaskCompletion(element.id);
-            console.log(Project.allProjects);
-            tasksDisplay(currentProject);
-
+    currentProject.showList.forEach((task) => {
+        const taskElement = createElement('div', '', task.title, tasks);
+        taskElement.addEventListener('click', () => {
+            currentProject.toggleTaskCompletion(task.id);
+            console.log(currentProject.showList);
+            tasksDisplay();
         });
     });
 }
@@ -180,4 +147,22 @@ form.addEventListener('submit', (e) => {
     modal.classList.remove('active');
 });
 
-// modal 2
+// ADD TASK MODAL
+addTaskForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const formData = new FormData(addTaskForm);
+    const inputData = {
+        title: formData.get("title"),
+        description: formData.get("descrip"),
+        date: formData.get("date"),
+        priority: formData.get("priority")
+    };
+    if (!inputData.title) return;
+    const newTask = new AddTask(inputData.title, inputData.description, inputData.date, inputData.priority);
+    currentProject.addTask(newTask);
+    tasksDisplay();
+    console.log(currentProject); // ✅ collected data 
+    addTaskModalContainer.classList.remove('show');
+    addTaskForm.reset();
+    addButton.classList.remove('hideAddButton');
+});

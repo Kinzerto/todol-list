@@ -43,6 +43,26 @@
             <h1 class="title"></h1>
             <div class="tasks"></div>
             <div class="addButton"></div>
+            <!-- MODAL -->
+            <div class="addTaskModalContainer" id="addTaskModalContainer">
+                <div class="addTaskModal">
+                    <form class="AddTaskForm">
+                        <textarea class="title" type="text" name="title" placeholder="What to do?"></textarea>
+                        <textarea class="descrip" type="text" name="descrip" placeholder="Description"></textarea>
+                        <input type="date" name="date">
+                        <select name="priority" id="priority">
+                            <option value="priority1">Priority 1</option>
+                            <option value="priority2">Priority 2</option>
+                            <option value="priority3">Priority 3</option>
+                            <option value="priority4">Priority 4</option>
+                        </select>
+                        <div class="modalButton">
+                            <button id="cancel">Cancel</button>
+                            <button type="submit">Add Task</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <!-- modal -->
         <div class="modal" id="modal">
@@ -61,33 +81,13 @@
 
             </div>
         </div>
+
     </div>
 
     <!-- add task modal -->
 
-    <div class="container2 ">
-        <button id="open">Open</button>
 
-        <div class="addTaskModalContainer" id="addTaskModalContainer">
-            <div class="addTaskModal">
-                <form class="AddTaskForm">
-                    <textarea class="title" type="text" name="title" placeholder="What to do?"></textarea>
-                    <textarea class="descrip" type="text" name="descrip" placeholder="Description"></textarea>
-                    <input type="date" name="date">
-                    <select name="priority" id="priority">
-                        <option value="priority1">Priority 1</option>
-                        <option value="priority2">Priority 2</option>
-                        <option value="priority3">Priority 3</option>
-                        <option value="priority4">Priority 4</option>
-                    </select>
-                    <div class="modalButton">
-                        <button id="cancel">Cancel</button>
-                        <button type="submit">Add Task</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+
 </body>
 
 </html>
