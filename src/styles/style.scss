@@ -249,7 +249,7 @@ $poppins: 'Poppins', sans-serif;
 
 
     .addTaskModalContainer {
-        background-color: rgba(0, 0, 0, 0.2);
+        // background-color: rgba(0, 0, 0, 0.2);
         position: fixed;
         top: 0;
         left: 0;
@@ -266,9 +266,9 @@ $poppins: 'Poppins', sans-serif;
             opacity: 1;
         }
 
-        .modal {
-            border-radius: 5px;
-            background-color: wheat;
+        .addTaskModal {
+            border-radius: 15px;
+            background-color: white;
             border: 2px solid black;
             padding: 20px;
             width: 600px;
@@ -293,6 +293,7 @@ $poppins: 'Poppins', sans-serif;
                 border: none;
                 outline: none;
                 font-weight: bold;
+                font-family: $poppins;
 
 
                 &:focus {
@@ -333,13 +334,36 @@ $poppins: 'Poppins', sans-serif;
                     font-weight: normal;
                 }
             }
+            .modalButton {
+                display: flex;
+                gap: 8px;
+                justify-content: flex-end;
+                // border: 1px solid red;
 
+                button {
+                    font-family: $poppins;
+                    font-size: 14px;
+                    width: 100px;
+                    height: 35px;
+                    border-radius: 5px;
+                    border: none;
+                    cursor: pointer;
+                }
+                
+                button[type="submit"]{
+                    background-color: #d33322;
+                    font-weight: bold;
+                    color: white;
+                    
+                }
+            }
 
 
 
             #close {
                 margin-top: 20px;
             }
+
         }
     }
 
