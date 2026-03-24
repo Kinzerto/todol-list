@@ -12,6 +12,7 @@ export class Project {
     addTask(task) {
         if (!task) return;
         this.#tasks.push(task);
+        Project.#allProjects[this.name] = this;
     }
 
     removeTask(taskId) {
@@ -24,7 +25,17 @@ export class Project {
         if (task) {
             task.completed = !task.completed;
         }
+        Project.#allProjects[this.name] = this;
     }
+
+    editTask(taskId, updatedData) {
+        const task = this.#tasks.find((task) => task.id === taskId);
+        if (task) {
+            Object.assign(task, updatedData);
+        }
+        Project.#allProjects[this.name] = this;
+    }
+
 
     get showList() {
         return structuredClone(this.#tasks);
@@ -48,7 +59,7 @@ export class AddTask {
     }
 }
 
-// DOM Elements
+// Content and DOM elements
 const content = document.querySelector('.content');
 
 const addedProjects = document.querySelector('.addedProjects');
@@ -56,13 +67,14 @@ const tasks = document.querySelector('.tasks');
 const addButton = document.querySelector('.addButton');
 const titleContainer = document.querySelector('.title')
 
-// For adding task(MODAL)
+// For adding task(MODAL) elements
 const addTaskModalContainer = document.getElementById('addTaskModalContainer');
 const cancel = document.getElementById('cancel');
 const addTaskForm = document.querySelector('.AddTaskForm');
 
 // Current project state(to know which project is currently active)
 let currentProject = null;
+
 // creating project
 function createProject(name) {
     if (!name) return;
@@ -110,10 +122,17 @@ function tasksDisplay() {
         const radio = createElement('input', '', '', taskContainer);
         radio.type = 'radio';
         radio.checked = task.completed;
+        // add priority class color to radio button based on task priority
+        if (task.priority) radio.classList.add(task.priority);
         // task title
         const taskTitle = createElement('div', 'taskTitle', task.title, taskContainer);
+
+        const buttonContainer = createElement('div', 'buttonContainer', '', taskContainer);
+
+        // edit button
+        const editBtn = createElement('button', 'editBtn', 'Edit', buttonContainer);
         // delete button
-        const deleteBtn = createElement('button', 'deleteBtn', 'Delete', taskContainer);
+        const deleteBtn = createElement('button', 'deleteBtn', 'Delete', buttonContainer);
         // toggle completed class based on task completion status
         taskTitle.classList.toggle('completed', task.completed);
 
@@ -129,8 +148,18 @@ function tasksDisplay() {
             currentProject.removeTask(task.id);
             tasksDisplay();
             console.log(currentProject);
+
+        });
+        // editBtn.addEventListener('click', () => {
+        //     // Open edit modal and populate with task data
+        //     addTaskModalContainer.classList.add('show')
+
+        // });
+        // modal for editing task details 
+        taskTitle.addEventListener('click', () => {
             
         });
+        console.log(Project.allProjects);
     });
 }
 
@@ -142,6 +171,7 @@ const openBtn = document.getElementById('openModal');
 const closeBtn = document.getElementById('closeModal');
 const overlay = document.querySelector('.modal-overlay');
 const inputNewProject = document.querySelector('#newProject');
+const form = document.getElementById('projectForm');
 
 
 openBtn.addEventListener('click', () => {
@@ -156,8 +186,7 @@ overlay.addEventListener('click', () => {
     modal.classList.remove('active');
 });
 
-const form = document.getElementById('projectForm');
-
+// CREATE PROJECT MODAL FORM SUBMISSION
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     const val = inputNewProject.value;
@@ -168,7 +197,7 @@ form.addEventListener('submit', (e) => {
     modal.classList.remove('active');
 });
 
-// ADD TASK MODAL
+// ADD TASK MODAL FORM SUBMISSION
 addTaskForm.addEventListener('submit', function (e) {
     e.preventDefault();
     const formData = new FormData(addTaskForm);

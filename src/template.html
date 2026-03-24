@@ -47,7 +47,7 @@
             <h1 class="title"></h1>
             <div class="tasks"></div>
             <div class="addButton"></div>
-            <!-- MODAL -->
+            <!-- ADD TASK MODAL -->
             <div class="addTaskModalContainer" id="addTaskModalContainer">
                 <div class="addTaskModal">
                     <form class="AddTaskForm">
@@ -55,10 +55,10 @@
                         <textarea class="descrip" type="text" name="descrip" placeholder="Description"></textarea>
                         <input type="date" name="date">
                         <select name="priority" id="priority">
-                            <option value="priority1">Priority 1</option>
-                            <option value="priority2">Priority 2</option>
-                            <option value="priority3">Priority 3</option>
-                            <option value="priority4">Priority 4</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="" selected>Priority</option>
                         </select>
                         <div class="line"></div>
                         <div class="modalButton">
@@ -89,7 +89,31 @@
 
     </div>
 
-    <!-- add task modal -->
+    <div class="container2">
+        <button id="open">Open Modal</button>
+
+        <div class="InfoContainerModal">
+            <div class="modalInfo">
+                <div class="buttonSection"><button id="closeInfoModal">Closes </button></div>
+                <div class="line"></div>
+                <div class="infoContent">
+                    <div class="editBtn"><button class="projectName">Name</button></div>
+                    <div class="editBtn"><input type="date" class="editDate"></div>
+                    <div class="editBtn"><select name="priority" id="priority">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="" selected>Priority</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
 
 
 
