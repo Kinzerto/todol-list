@@ -32,6 +32,8 @@ export class Project {
         const task = this.#tasks.find((task) => task.id === taskId);
         if (task) {
             Object.assign(task, updatedData);
+            console.log(task);
+            console.log(updatedData);
         }
         Project.#allProjects[this.name] = this;
     }
@@ -71,10 +73,14 @@ const titleContainer = document.querySelector('.title')
 const addTaskModalContainer = document.getElementById('addTaskModalContainer');
 const cancel = document.getElementById('cancel');
 const addTaskForm = document.querySelector('.AddTaskForm');
+const inputTitle = addTaskForm.querySelector('input[name="title"]');
+
+
 
 // Current project state(to know which project is currently active)
 let currentProject = null;
 
+let editingTaskId = null; // Track the task being edited
 // creating project
 function createProject(name) {
     if (!name) return;
@@ -115,9 +121,13 @@ function tasksDisplay() {
         addTaskModalContainer.classList.remove('show');
         addTaskForm.reset();
         addButton.classList.remove('hideAddButton');
+        // Reset edit mode
+        editingTaskId = null;
+        // Reset button text
     });
     //loop through tasks and display them
     currentProject.showList.forEach((task) => {
+        if (task.completed === true) return;
         const taskContainer = createElement('div', 'taskContainer', '', tasks);
         const radio = createElement('input', '', '', taskContainer);
         radio.type = 'radio';
@@ -144,20 +154,71 @@ function tasksDisplay() {
         });
 
         // delete a task
+
+        editBtn.addEventListener('click', () => {
+            addButton.classList.add('hideAddButton');
+            addTaskModalContainer.classList.remove('show');
+            addTaskModalContainer.classList.add('edit-modal');
+            // addButton.classList.add('hideAddButton');
+            // Disable add button while editing
+            if (editingTaskId) return; // Prevent multiple edit modals
+            // Clone the modal and insert it above the task
+
+            const modalClone = addTaskModalContainer.cloneNode(true);
+            modalClone.classList.add('show', 'edit-modal');
+
+            taskContainer.parentNode.insertBefore(modalClone, taskContainer);
+            taskContainer.style.display = 'none'; // Hide the task while editing
+            // Disable delete button while editing
+            // Add a class to style the edit modal differently if needed
+
+            editingTaskId = task.id;  // Set edit mode
+
+            // Populate form with existing task data
+            const form = modalClone.querySelector('.AddTaskForm');
+            form.elements['title'].value = task.title;
+            form.elements['descrip'].value = task.description || '';
+            form.elements['date'].value = task.dueDate || '';
+            form.elements['priority'].value = task.priority || '';
+
+            // Update modal UI for editing
+            form.querySelector('button[type="submit"]').textContent = 'Update';
+            // Handle cancel
+            const cancelBtn = modalClone.querySelector('#cancel');
+            cancelBtn.addEventListener('click', (e) => {
+                addButton.classList.remove('hideAddButton');
+                e.preventDefault();
+                modalClone.remove();
+                editingTaskId = null;
+                taskContainer.style.display = ''; // Show the task again after canceling
+            });
+
+            // Handle form submission for this modal
+            form.addEventListener('submit', function (e) {
+                addButton.classList.remove('hideAddButton');
+                e.preventDefault();
+                const formData = new FormData(form);
+                const inputData = {
+                    title: formData.get("title"),
+                    description: formData.get("descrip"),
+                    dueDate: formData.get("date"),
+                    priority: formData.get("priority")
+                };
+                if (!inputData.title) return;
+
+                currentProject.editTask(editingTaskId, inputData);
+                modalClone.remove();
+                tasksDisplay();
+                editingTaskId = null;
+                taskContainer.style.display = ''; // Show the task again after editing
+            });
+        });
+
         deleteBtn.addEventListener('click', () => {
+            if(editingTaskId) return; // Prevent deletion while editing
             currentProject.removeTask(task.id);
             tasksDisplay();
             console.log(currentProject);
-
-        });
-        // editBtn.addEventListener('click', () => {
-        //     // Open edit modal and populate with task data
-        //     addTaskModalContainer.classList.add('show')
-
-        // });
-        // modal for editing task details 
-        taskTitle.addEventListener('click', () => {
-            
         });
         console.log(Project.allProjects);
     });
@@ -207,9 +268,15 @@ addTaskForm.addEventListener('submit', function (e) {
         date: formData.get("date"),
         priority: formData.get("priority")
     };
-    if (!inputData.title) return;
-    const newTask = new AddTask(inputData.title, inputData.description, inputData.date, inputData.priority);
+    if (!inputData.title) {
+        // alert('Please enter a task title.');
+        return;
+    }
+
+    // Adding mode: create new task
+    const newTask = new AddTask(inputData.title, inputData.description, inputData.dueDate, inputData.priority);
     currentProject.addTask(newTask);
+
     tasksDisplay();
     console.log(currentProject); // ✅ collected data 
     addTaskModalContainer.classList.remove('show');

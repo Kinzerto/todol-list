@@ -10,6 +10,5 @@ export function display() {
     //Title
     const title = createElement('h1', '', 'TODO LIST', header);
     
-    
 
 }
