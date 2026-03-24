@@ -50,6 +50,7 @@ export class AddTask {
 
 // DOM Elements
 const content = document.querySelector('.content');
+
 const addedProjects = document.querySelector('.addedProjects');
 const tasks = document.querySelector('.tasks');
 const addButton = document.querySelector('.addButton');
@@ -103,17 +104,17 @@ function tasksDisplay() {
         addTaskForm.reset();
         addButton.classList.remove('hideAddButton');
     });
-
+    //loop through tasks and display them
     currentProject.showList.forEach((task) => {
         const taskContainer = createElement('div', 'taskContainer', '', tasks);
         const radio = createElement('input', '', '', taskContainer);
         radio.type = 'radio';
         radio.checked = task.completed;
-
+        // task title
         const taskTitle = createElement('div', 'taskTitle', task.title, taskContainer);
-
+        // delete button
         const deleteBtn = createElement('button', 'deleteBtn', 'Delete', taskContainer);
-
+        // toggle completed class based on task completion status
         taskTitle.classList.toggle('completed', task.completed);
 
         //radio button to toggle task completion
@@ -123,23 +124,11 @@ function tasksDisplay() {
             tasksDisplay();
         });
 
+        // delete a task
         deleteBtn.addEventListener('click', () => {
             currentProject.removeTask(task.id);
             tasksDisplay();
             console.log(currentProject);
-            
-        });
-
-        taskTitle.addEventListener('click', () => {
-            // Create a modal to display task details and options to edit or delete the task
-            const taskDetailModal = createElement('div', 'taskDetailModal', '', content);
-            const modalContent = createElement('div', 'modalContent', '', taskDetailModal);
-            createElement('h2', '', task.title, modalContent);
-            createElement('p', '', `Description: ${task.description}`, modalContent);
-            createElement('p', '', `Due Date: ${task.dueDate}`, modalContent);
-            createElement('p', '', `Priority: ${task.priority}`, modalContent);
-            createElement('p', '', `Notes: ${task.notes}`, modalContent);
-
             
         });
     });
