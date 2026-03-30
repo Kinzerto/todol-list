@@ -44,9 +44,11 @@
             </div>
         </div>
         <div class="content">
-            <h1 class="title"></h1>
-            <div class="tasks"></div>
-            <div class="addButton"></div>
+            <div class="wrapper">
+                <h1 class="title"></h1>
+                <div class="tasks"></div>
+                <div class="addButton"></div>
+            </div>
             <!-- ADD TASK MODAL -->
             <div class="addTaskModalContainer" id="addTaskModalContainer">
                 <div class="addTaskModal">
@@ -68,8 +70,9 @@
                     </form>
                 </div>
             </div>
+
         </div>
-        <!-- modal -->
+        <!-- Creating new Project modal -->
         <div class="modal" id="modal">
             <div class="modal-overlay"></div>
 
@@ -88,35 +91,18 @@
         </div>
 
     </div>
-    <!-- 
-    <div class="container2">
-        <button id="open">Open Modal</button>
 
-        <div class="InfoContainerModal">
-            <div class="modalInfo">
-                <div class="buttonSection"><button id="closeInfoModal">Closes </button></div>
-                <div class="line"></div>
-                <div class="infoContent">
-                    <div class="editBtn"><button class="projectName">Name</button></div>
-                    <div class="editBtn"><input type="date" class="editDate"></div>
-                    <div class="editBtn"><select name="priority" id="priority">
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
-                            <option value="" selected>Priority</option>
-                        </select>
-                    </div>
-                </div>
+    <!-- Details Modal -->
 
-            </div>
+    <div class="detailsModal" id="detailsModal">
+        <div class="modalOverlay"></div>
 
+        <div class="modal-content">
+            <h2>Modal Title</h2>
+            <p>This is a simple modal</p>
+            <button id="closeModal">Close</button>
         </div>
-    </div> -->
-
-
-
-
-
+    </div>
 </body>
 
 </html>
