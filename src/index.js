@@ -1,18 +1,19 @@
 import { Project, createProject, AddTask, currentProject } from "./scripts/list.js";
 import { createElement } from "./utils/createElement.js";
-import { display } from "./scripts/display.js";
+// import { display } from "./scripts/display.js";
 
 import './styles/reset.scss';
+import './styles/style.scss';
 
-const projects = document.querySelector('.projects');
-const tasks = document.querySelector('.tasks');
-const projectButton = document.querySelector('button');
-
-const addProject = document.querySelector('.addProject');
 
 // createProject(addProject);
 
 document.addEventListener('DOMContentLoaded', display);
+
+function display() {
+    const container = document.querySelector('.container');
+    const header = document.querySelector('header');   
+}
 
 
 

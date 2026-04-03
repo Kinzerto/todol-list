@@ -32,7 +32,7 @@ $poppins: 'Poppins', sans-serif;
     }
 
     .sidebar {
-        padding-top: 8px;
+        padding-top: 30px;
         background-color: $sidebar;
         grid-area: sidebar;
         padding-left: 15px;
@@ -295,185 +295,223 @@ $poppins: 'Poppins', sans-serif;
         }
 
         .wrapper {
-            border: 1px solid red;
+
             width: 100%;
 
             .tasks {
-                .completedContainerTasks {
-                    border: 2psx solid green;
+                .completedContainer {
+                    .projectSection{
+                        border: 1px solid red;
+                        &.collapsed {
+                            .allTasks {
+                                display: none;
+                            }
+                        }
+                    }
+
+                    .projectHeader {
+                        padding: 5px 0 0 5px;
+                        display: flex;
+                        align-items: center;
+                        font-size: 17px;
+                        font-weight: 500;
+
+                        .collapse {
+                            margin-left: auto;
+                            border: none;
+                            background-color: transparent;
+                            font-size: 17px;
+                            cursor: pointer;
+                            // transform: rotate(90deg);
+                            transition: transform 0.3s ease;
+
+                            &.collapsed {
+                                transform: rotate(0deg);
+                            }
+
+                            // &.collapsed::after {
+                            //     content: '>';
+                            //     color: rgba(0, 0, 0, 0.597);
+                            //     padding-right: 4px;
+                            // }
+                        }
+                    }
                 }
 
                 .edit-modal {}
 
-                .taskContainer {
-                    position: relative;
-                    border: 2px solid green;
-                    -top: 4px;
-                    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                    padding: 5px 0;
-
-                    &:hover {
-                        .buttonContainer {
-                            opacity: 1;
-                        }
-                    }
-
-
-                    input[type="radio"] {
-                        flex-shrink: 0;
-                        align-self: flex-start;
-                        margin-top: 6px;
-                        cursor: pointer;
-                        appearance: none;
-                        /* remove native styling */
-                        width: 20px;
-                        height: 20px;
-                        border: 2px solid rgba(0, 0, 0, 0.44);
-                        /* outline color */
-                        border-radius: 50%;
-                        background-color: white;
-                        cursor: pointer;
+                .allTasks {
+                    // padding-bottom: px;
+                    .taskContainer {
                         position: relative;
-
-                        &.low {
-                            border: 3px solid green;
-                            background-color: rgba(0, 128, 0, 0.2);
-
-                            &:checked::before {
-                                background-color: green;
-                            }
-                        }
-
-                        &.medium {
-                            border: 3px solid blue;
-                            background-color: rgba(13, 0, 128, 0.2);
-
-                            &:checked::before {
-                                background-color: blue;
-                            }
-                        }
-
-                        &.high {
-                            border: 3px solid red;
-                            background-color: rgba(255, 0, 0, 0.2);
-
-                            &:checked::before {
-                                background-color: red;
-                            }
-                        }
-
-                        // display: flex;
-                        // justify-content: center;
-                        // align-content: center;
-
-                        &:checked::before {
-                            position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            transform: translate(-52%, -50%);
-
-                            content: '';
-                            width: 10px;
-                            height: 10px;
-                            border-radius: 50%;
-                            background-color: red;
-                            font-weight: bold;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-
-                            font-size: 10px;
-                            color: white;
-                        }
+                        // border: 2px solid green;
+                        -top: 4px;
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 5px 0;
 
                         &:hover {
-                            border-color: rgba(171, 122, 33, 0.567);
+                            .buttonContainer {
+                                opacity: 1;
+                            }
+                        }
 
-                            &::before {
+
+                        input[type="radio"] {
+                            flex-shrink: 0;
+                            align-self: flex-start;
+                            margin-top: 6px;
+                            cursor: pointer;
+                            appearance: none;
+                            /* remove native styling */
+                            width: 20px;
+                            height: 20px;
+                            border: 2px solid rgba(0, 0, 0, 0.44);
+                            /* outline color */
+                            border-radius: 50%;
+                            background-color: white;
+                            cursor: pointer;
+                            position: relative;
+
+                            &.low {
+                                border: 3px solid green;
+                                background-color: rgba(0, 128, 0, 0.2);
+
+                                &:checked::before {
+                                    background-color: green;
+                                }
+                            }
+
+                            &.medium {
+                                border: 3px solid blue;
+                                background-color: rgba(13, 0, 128, 0.2);
+
+                                &:checked::before {
+                                    background-color: blue;
+                                }
+                            }
+
+                            &.high {
+                                border: 3px solid red;
+                                background-color: rgba(255, 0, 0, 0.2);
+
+                                &:checked::before {
+                                    background-color: red;
+                                }
+                            }
+
+                            // display: flex;
+                            // justify-content: center;
+                            // align-content: center;
+
+                            &:checked::before {
                                 position: absolute;
                                 top: 50%;
                                 left: 50%;
-                                transform: translate(-50%, -50%);
+                                transform: translate(-52%, -50%);
 
-                                content: '✓';
+                                content: '';
                                 width: 10px;
                                 height: 10px;
-                                font-size: 10px;
                                 border-radius: 50%;
+                                background-color: red;
                                 font-weight: bold;
-                                color: rgba(171, 122, 33, 0.567);
                                 display: flex;
                                 align-items: center;
                                 justify-content: center;
+
+                                font-size: 10px;
+                                color: white;
+                            }
+
+                            &:hover {
+                                border-color: rgba(171, 122, 33, 0.567);
+
+                                &::before {
+                                    position: absolute;
+                                    top: 50%;
+                                    left: 50%;
+                                    transform: translate(-50%, -50%);
+
+                                    content: '✓';
+                                    width: 10px;
+                                    height: 10px;
+                                    font-size: 10px;
+                                    border-radius: 50%;
+                                    font-weight: bold;
+                                    color: rgba(171, 122, 33, 0.567);
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                }
+                            }
+
+                        }
+
+                        .taskTitle {
+                            cursor: pointer;
+                            flex: 1;
+                            // border: 1px solid red;
+                            height: 100%;
+                            display: flex;
+                            height: 100%;
+                            word-wrap: break-word;
+                            overflow-wrap: break-word;
+                            word-break: break-all;
+
+
+                            &.completed {
+                                text-decoration: line-through;
+                                color: rgba(0, 0, 0, 0.597);
                             }
                         }
 
-                    }
-
-                    .taskTitle {
-                        cursor: pointer;
-                        flex: 1;
-                        border: 1px solid red;
-                        height: 100%;
-                        display: flex;
-                        height: 100%;
-                        word-wrap: break-word;
-                        overflow-wrap: break-word;
-                        word-break: break-all;
-
-
-                        &.completed {
-                            text-decoration: line-through;
-                            color: rgba(0, 0, 0, 0.597);
-                        }
-                    }
-
-                    .buttonContainer {
-                        margin-top: 4px;
-                        align-self: flex-start;
-                        height: 100%;
-                        opacity: 0;
-                        display: flex;
-                        gap: 8px;
-                        margin-left: auto;
-                        padding-right: 20px;
-
-                        .deleteBtn {
-                            opacity: 0.5;
-                            background-color: rgba(0, 0, 0, 0.3);
-                            border-radius: 5px;
-                            font-weight: bold;
-                            border: none;
-                            // padding: 0px 5px;
-                            height: 30px;
+                        .buttonContainer {
+                            margin-top: 4px;
+                            align-self: flex-start;
+                            height: 100%;
+                            opacity: 0;
+                            display: flex;
+                            gap: 8px;
                             margin-left: auto;
-                            cursor: pointer;
+                            padding-right: 20px;
 
-                            &:hover {
-                                opacity: 1;
-                                background-color: #d33322;
-                                color: whitesmoke;
+                            .deleteBtn {
+                                opacity: 0.5;
+                                background-color: rgba(0, 0, 0, 0.3);
+                                border-radius: 5px;
+                                font-weight: bold;
+                                border: none;
+                                // padding: 0px 5px;
+                                height: 30px;
+                                margin-left: auto;
+                                cursor: pointer;
+
+                                &:hover {
+                                    opacity: 1;
+                                    background-color: #d33322;
+                                    color: whitesmoke;
+                                }
                             }
-                        }
 
-                        .editBtn {
-                            opacity: 0.5;
-                            background-color: rgba(0, 0, 0, 0.3);
-                            border-radius: 5px;
-                            font-weight: bold;
-                            border: none;
-                            // padding: 0px 5px;
-                            height: 30px;
-                            cursor: pointer;
-                            margin-left: auto;
+                            .editBtn {
+                                opacity: 0.5;
+                                background-color: rgba(0, 0, 0, 0.3);
+                                border-radius: 5px;
+                                font-weight: bold;
+                                border: none;
+                                // padding: 0px 5px;
+                                height: 30px;
+                                cursor: pointer;
+                                margin-left: auto;
 
-                            &:hover {
-                                opacity: 1;
-                                background-color: #d33322;
-                                color: whitesmoke;
+                                &:hover {
+                                    opacity: 1;
+                                    background-color: #d33322;
+                                    color: whitesmoke;
+                                }
                             }
                         }
                     }
@@ -739,7 +777,7 @@ $poppins: 'Poppins', sans-serif;
         background: none;
         font-size: 30px;
         cursor: pointer;
-        font-weight:800;
+        font-weight: 800;
         // background-color: rgba(16, 16, 16, 0.093);
         color: rgba(4, 4, 4, 0.429);
         // border-radius: 50%;
@@ -977,6 +1015,7 @@ $poppins: 'Poppins', sans-serif;
             background-color: rgba(0, 0, 0, 0.3);
             padding: 0;
         }
+
         .modalButton {
             display: flex;
             gap: 8px;
