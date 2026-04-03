@@ -95,12 +95,12 @@
     <!-- Details Modal -->
 
     <div class="detailsModal" id="detailsModal">
-
         <div class="modalOverlay"></div>
         <div class="modal-content">
-            <form class="AddTaskForm">
+            <button class="close-btn" id="closeDetailsModal">&times;</button>
+            <form class="showDetailsForm">
                 <div class="groupRadioTitleDesc">
-                    <input type="radio">
+                    <!-- <input type="radio" name="isDone" class="isDoneDetail"> -->
                     <div class="titleDescrip">
                         <textarea class="title" type="text" name="title" placeholder="What to do?"></textarea>
                         <textarea class="descrip" type="text" name="descrip" placeholder="Description"></textarea>
@@ -123,10 +123,11 @@
                     </div>
                 </div>
                 <div class="line"></div>
+                <div class="modalButton">
+                    <button id="delete">Delete</button>
+                    <button type="submit" id="saveChange">Save Changes</button>
+                </div>
             </form>
-            <!-- <h2>Modal Title</h2>
-            <p>This is a simple modal</p> -->
-            <button id="closeModal">Close</button>
         </div>
     </div>
 </body>
