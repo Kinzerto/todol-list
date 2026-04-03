@@ -95,11 +95,37 @@
     <!-- Details Modal -->
 
     <div class="detailsModal" id="detailsModal">
-        <div class="modalOverlay"></div>
 
+        <div class="modalOverlay"></div>
         <div class="modal-content">
-            <h2>Modal Title</h2>
-            <p>This is a simple modal</p>
+            <form class="AddTaskForm">
+                <div class="groupRadioTitleDesc">
+                    <input type="radio">
+                    <div class="titleDescrip">
+                        <textarea class="title" type="text" name="title" placeholder="What to do?"></textarea>
+                        <textarea class="descrip" type="text" name="descrip" placeholder="Description"></textarea>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <div class="ProjectName">
+                        <select name="project" id="project">
+                            <option value="" selected>Project</option>
+                        </select>
+                    </div>
+                    <div class="date"><input type="date" name="date" placeholder="DD-MM-YYYY"></div>
+                    <div class="prio">
+                        <select name="priority" id="priority">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="" selected>Priority</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="line"></div>
+            </form>
+            <!-- <h2>Modal Title</h2>
+            <p>This is a simple modal</p> -->
             <button id="closeModal">Close</button>
         </div>
     </div>
