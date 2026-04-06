@@ -1,14 +1,15 @@
 //projectController.js
-import {Project} from "../models/Project.js"
-import { tasksDisplay} from "../scripts/list.js";
+import { Project } from "../models/Project.js"
+import { AddTask } from "../models/Tasks.js"
 import { createElement } from "../utils/createElement.js";
-import {state} from "../state.js";
-import {AddTask} from "../models/Tasks.js"
 
-// this DOM shows ALL you projects you input(PS: its a container/wrapper) 
+import { tasksDisplay } from "../controllers/taskController.js";
+import { state } from "../state.js";
+
+// this Elmemt  shows ALL you projects you input(PS: its a container/wrapper) 
 const addedProjects = document.querySelector('.addedProjects');
 
-
+// CREATE PROJECT MODAL FORM SUBMISSION
 export function createProject(name) {
     if (!name) return;
     const newProject = new Project(name);
@@ -22,7 +23,7 @@ export function createProject(name) {
         state.currentProject = newProject
         tasksDisplay();
         // console.log(currentProject);
-        
+
     });
 
     return newProject;
@@ -43,15 +44,15 @@ const overlay = document.querySelector('.modal-overlay');
 const inputNewProject = document.querySelector('#newProject');
 const form = document.getElementById('projectForm');
 
-
+// Event listeners for opening and closing the modal
 openModal.addEventListener('click', () => {
     modal.classList.add('active');
 });
-
+// Close modal when clicking the close button or overlay
 closeBtn.addEventListener('click', () => {
     modal.classList.remove('active');
 });
-
+// Close modal when clicking outside the modal content
 overlay.addEventListener('click', () => {
     modal.classList.remove('active');
 });
