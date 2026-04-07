@@ -5,46 +5,16 @@ import { state } from "../state.js";
 
 import { tasks, addButton, headerTitle } from '../index.js';
 
-
-
-
-
-
-
-
-// For adding task(MODAL) elements
-
-
-// for details
-const detailsModal = document.querySelector('.detailsModal');
-const modalOverlay = detailsModal.querySelector('.modalOverlay');
-const detailsContent = detailsModal.querySelector('.modal-content');
-const showDetailsForm = detailsContent.querySelector('form.showDetailsForm');
-const closeDetailsModal = detailsContent.querySelector('#closeDetailsModal');
-const deleteDetail = showDetailsForm.querySelector('#delete');
-
-const groupRadioTitleDesc = showDetailsForm.querySelector('.groupRadioTitleDesc');
-
-
-// export let state.currentProject = null;// Current project state(to know which project is currently active)
-// state.currentView = 'project';
-// creating project
-
-
 // display tasks
+// let state.state.currentDivId = null;
+// let state.state.currentProjectName  = null;
 
-let plus = 1;
 // render tasks function with option to hide add button and show only completed tasks
 export function renderTasks(taskList = state.currentProject.showList, parentContainer = tasks, hideAddBtn = false) {
-    console.log(state.currentProject);
-
-    console.log(hideAddBtn);
-    plus++;
-    console.log(plus);
     parentContainer.replaceChildren(); // clear container
 
-
     if (hideAddBtn === false) {
+        state.currentProjectName = state.currentProject.name;
         addButton.replaceChildren();
         headerTitle.textContent = state.currentProject.name;
         const addButtonContainer = createElement('div', 'addButtonContainer', '', addButton);
@@ -61,16 +31,22 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
         taskList = taskList.filter((task) => !task.completed)
     }
 
-    console.log(taskList);
-
     taskList.forEach((task) => {
         const allTasks = createElement('div', 'allTasks', '', parentContainer);
-        const taskContainer = createElement('div', 'taskContainer', '', allTasks);
-        taskContainer.dataset.id = task.id;
+        const taskWrap = createElement('div', 'taskWrap', '', allTasks);
+        taskWrap.dataset.id = task.id;
 
-        taskContainer.addEventListener('click', (e) => {
+
+
+        taskWrap.addEventListener('click', (e) => {
+            console.log(state.currentView);
+            state.currentProjectName = findProjectNameByTaskId(taskWrap.dataset.id);
+
             detailsModal.classList.add('active');
-            currentDivId = task.id;
+            state.currentDivId = task.id;
+
+            // console.log(state.currentProjectName );
+
 
             showDetailsForm.elements['title'].value = task.title;
             showDetailsForm.elements['descrip'].value = task.description || '';
@@ -78,7 +54,7 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
             showDetailsForm.elements['priority'].value = task.priority || '';
         });
 
-        const radio = createElement('input', '', '', taskContainer);
+        const radio = createElement('input', '', '', taskWrap);
         radio.type = 'radio';
         radio.checked = task.completed;
         // add priority class color to radio button based on task priority
@@ -87,108 +63,25 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
         //radio button to toggle task completion
         radio.addEventListener('click', (e) => {
             e.stopPropagation();
-            state.currentProject.toggleTaskCompletion(task.id);
+            const state = findProjectNameByTaskId(task.id);
+            console.log(state);
+            state.toggleTaskCompletion(task.id)
+            // state.currentProject.toggleTaskCompletion(task.id);
             taskTitle.classList.add('completed');
             if (!hideAddBtn) {
                 renderTasks()
             } else {
-                completedTask()
+                filterTask()
             }
         });
 
         // task title
-        const taskTitle = createElement('div', 'taskTitle', task.title, taskContainer);
+        const taskTitle = createElement('div', 'taskTitle', task.title, taskWrap);
+        const description = createElement('div', 'description', task.description, taskWrap);
+        const date = createElement('div', 'date', task.dueDate, taskWrap);
         // toggle completed class based on task completion status
-        taskTitle.classList.toggle('completed', task.completed);
+        // taskTitle.classList.toggle('completed', task.completed);
 
-        // if (hideAddBtn) return
-        //container for edt and delete button
-        if (hideAddBtn) return
-        const buttonContainer = createElement('div', 'buttonContainer', '', taskContainer);
-
-        // edit button
-        const editBtn = createElement('button', 'editBtn', 'Edit', buttonContainer);
-        // delete button
-        const deleteBtn = createElement('button', 'deleteBtn', 'Delete', buttonContainer);
-
-        // delete a task
-
-        editBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            addButton.classList.add('hideAddButton');
-            addTaskModalContainer.classList.remove('show');
-            addTaskModalContainer.classList.add('edit-modal');
-
-            // Disable add button while editing
-            if (state.editingTaskId) return; // Prevent multiple edit modals
-            // Clone the modal and insert it above the task
-
-            const modalClone = addTaskModalContainer.cloneNode(true);
-            modalClone.classList.add('show', 'edit-modal');
-
-            taskContainer.parentNode.insertBefore(modalClone, taskContainer);
-            taskContainer.style.display = 'none'; // Hide the task while editing
-            // Disable delete button while editing
-            // Add a class to style the edit modal differently if needed
-
-            state.editingTaskId = task.id;  // Set edit mode
-
-            // Populate form with existing task data
-            const form = modalClone.querySelector('.AddTaskForm');
-            form.elements['title'].value = task.title;
-            form.elements['descrip'].value = task.description || '';
-            form.elements['date'].value = task.dueDate || '';
-            form.elements['priority'].value = task.priority || '';
-
-            // Update modal UI for editing
-            form.querySelector('button[type="submit"]').textContent = 'Update';
-            // Handle cancel
-            const cancelBtn = modalClone.querySelector('#cancel');
-            cancelBtn.addEventListener('click', (e) => {
-                addButton.classList.remove('hideAddButton');
-                e.preventDefault();
-                modalClone.remove();
-                state.editingTaskId = null;
-                taskContainer.style.display = ''; // Show the task again after canceling
-            });
-
-            // Handle form submission for this modal
-            form.addEventListener('submit', function (e) {
-                addButton.classList.remove('hideAddButton');
-                e.preventDefault();
-                const formData = new FormData(form);
-                const inputData = {
-                    title: formData.get("title"),
-                    description: formData.get("descrip"),
-                    dueDate: formData.get("date"),
-                    priority: formData.get("priority")
-                };
-                if (!inputData.title) return;
-
-                state.currentProject.editTask(state.editingTaskId, inputData);
-                modalClone.remove();
-                if (!hideAddBtn) {
-                    renderTasks()
-                } else {
-                    completedTask()
-                }
-                state.editingTaskId = null;
-                taskContainer.style.display = ''; // Show the task again after editing
-            });
-        });
-        
-        // delete a task
-        deleteBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (state.editingTaskId) return; // Prevent deletion while editing
-            state.currentProject.removeTask(task.id);
-            if (!hideAddBtn) {
-                renderTasks()
-            } else {
-                completedTask()
-
-            }
-        });
     });
 
 }
@@ -197,21 +90,38 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
 //MODALS
 
 
+const detailsModal = document.querySelector('.detailsModal');
+const modalOverlay = detailsModal.querySelector('.modalOverlay');
+const detailsContent = detailsModal.querySelector('.modal-content');
+const showDetailsForm = detailsContent.querySelector('form.showDetailsForm');
+const closeDetailsModal = detailsContent.querySelector('#closeDetailsModal');
+const deleteDetail = showDetailsForm.querySelector('#delete');
 
+const groupRadioTitleDesc = showDetailsForm.querySelector('.groupRadioTitleDesc');
 
-
-
-// COMPLETED BUTTON
 const completed = document.querySelector('.completeTask');
+const important = document.querySelector('button.importantTask');
+const allTasks = document.querySelector('.allTasks');
 
-completed.addEventListener('click', completedTask);
-
-
-function completedTask() {
+completed.addEventListener('click', () => {
     state.currentView = 'completed';
+    filterTask();
+});
 
+important.addEventListener('click', () => {
+    state.currentView = 'important';
+    filterTask();
+});
+
+allTasks.addEventListener('click', () => {
+    state.currentView = 'allTasks';
+    filterTask();
+})
+
+
+function filterTask() {
     tasks.replaceChildren();
-    headerTitle.textContent = 'Completed';
+    headerTitle.textContent = state.currentView;
     addButton.replaceChildren();
 
     const completedContainer = createElement('div', 'completedContainer', '', tasks);
@@ -219,9 +129,15 @@ function completedTask() {
     const projects = Project.allProjects;
 
     for (const [projectName, project] of Object.entries(projects)) {
-
+        let completedTasks = null
         // ✅ filter ONLY this project's completed tasks
-        const completedTasks = project.showList.filter(task => task.completed);
+        if (state.currentView === 'completed') {
+            completedTasks = project.showList.filter(task => task.completed);
+        } else if (state.currentView === 'important') {
+            completedTasks = project.showList.filter(task => task.priority === 'high' && !task.completed);
+        } else if (state.currentView === 'allTasks') {
+            completedTasks = project.showList.filter(task => !task.completed);
+        }
 
         // ❗ skip empty projects
         if (completedTasks.length === 0) continue;
@@ -233,34 +149,41 @@ function completedTask() {
 
         // ✅ render tasks INSIDE this section
         renderTasks(completedTasks, section, true);
-        const projectHeader = createElement('div', 'projectHeader', projectName, section);
+        const projectHeader = createElement('div', 'projectHeader', '', section);
+
+        const projectNameSpan = createElement('span', 'projectNameSpan', projectName, projectHeader);
         section.prepend(projectHeader);
 
 
-        const collapse = createElement('button', 'collapse', '▼', projectHeader);
+        const collapse = document.createElement('span');
+        collapse.classList.add('material-symbols-outlined', 'collapse');
+        collapse.textContent = 'keyboard_arrow_down';
+        projectHeader.prepend(collapse);
+        // const collapse = createElement('span', 'collapse', '▼', projectHeader);
+
         collapse.addEventListener('click', (e) => {
-            collapse.textContent = collapse.textContent === '▼' ? '▶' : '▼';
+            collapse.textContent = collapse.textContent === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
             e.stopPropagation();
             section.classList.toggle('collapsed');
 
         });
 
+
     }
 }
 
 // details
-
-
-
 [modalOverlay, closeDetailsModal].forEach((el) => {
     el.addEventListener('click', () => {
         detailsModal.classList.remove('active')
     });
 })
 
-let currentDivId = null;
+
 showDetailsForm.addEventListener('submit', (e) => {
+
     e.preventDefault();
+
     const formDataDetail = new FormData(showDetailsForm);
     const inputData = {
         title: formDataDetail.get("title"),
@@ -269,25 +192,91 @@ showDetailsForm.addEventListener('submit', (e) => {
         priority: formDataDetail.get("priority")
     };
     if (!inputData.title) return;
-    state.currentProject.editTask(currentDivId, inputData);
-    detailsModal.classList.remove('active');
+    const projectName = findProjectNameByTaskId(state.currentDivId);
+    projectName.editTask(state.currentDivId, inputData);
+
     if (state.currentView === 'project') {
         renderTasks()
     } else {
-        completedTask()
+        filterTask()
     }
-    console.log(Project.allProjects);
+
+    detailsModal.classList.remove('active');
+
+
 });
 
 deleteDetail.addEventListener('click', (e) => {
+    console.log(state.currentProjectName);
     e.preventDefault();
-    state.currentProject.removeTask(currentDivId);
+    state.currentProjectName.removeTask(state.currentDivId);
+
+
+
+
     detailsModal.classList.remove('active');
+    // renderTasks();
     if (state.currentView === 'project') {
         renderTasks()
     } else {
-        completedTask()
+        filterTask()
     }
+
+    console.log(Project.allProjects);
 });
 
 
+function findProjectNameByTaskId(targetId) {
+    for (const [projectName, project] of Object.entries(Project.allProjects)) {
+        const found = project.showList.find(task => task.id === targetId);
+        // console.log(found);
+        if (found) {
+            return Project.allProjects[projectName]
+        }
+    }
+    return null;
+}
+
+
+
+// function importantTasks() {
+//     console.log(Project.allProjects);
+//     state.currentView = 'completed';
+
+//     tasks.replaceChildren();
+//     headerTitle.textContent = 'Important';
+//     addButton.replaceChildren();
+
+//     const completedContainer = createElement('div', 'completedContainer', '', tasks);
+
+//     const projects = Project.allProjects;
+
+//     for (const [projectName, project] of Object.entries(projects)) {
+
+//         // ✅ filter ONLY this project's completed tasks
+//         const completedTasks = project.showList.filter(task => task.priority === 'high');
+
+//         // ❗ skip empty projects
+//         if (completedTasks.length === 0) continue;
+
+//         // ✅ create section per project
+//         const section = createElement('div', 'projectSection', '', completedContainer);
+//         section.dataset.project = projectName; // for potential future use
+
+
+//         // ✅ render tasks INSIDE this section
+//         renderTasks(completedTasks, section, true);
+//         const projectHeader = createElement('div', 'projectHeader', projectName, section);
+//         section.prepend(projectHeader);
+
+
+//         const collapse = createElement('button', 'collapse', '▼', projectHeader);
+//         collapse.addEventListener('click', (e) => {
+//             collapse.textContent = collapse.textContent === '▼' ? '▶' : '▼';
+//             e.stopPropagation();
+//             section.classList.toggle('collapsed');
+
+//         });
+
+//     }
+// }

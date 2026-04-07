@@ -1,5 +1,4 @@
 import { AddTask } from "../models/Tasks.js"
-
 import { state } from "../state.js";
 import { renderTasks } from "../scripts/list.js";
 import { tasks, addButton } from '../index.js';
@@ -51,7 +50,4 @@ cancel.addEventListener('click', (e) => {
     addTaskModalContainer.classList.remove('show');
     addTaskForm.reset();
     addButton.classList.remove('hideAddButton');
-    // Reset edit mode
-    editingTaskId = null;
-    // Reset button text
 });

@@ -5,39 +5,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
 </head>
 
 <body>
     <div class="container">
         <header></header>
         <div class="sidebar">
-            <button class="addTask">
-                <span class="addIcon"></span>
-                All Tasks
-            </button>
-            <button class="todayTask">
-                <span class="todayIcon"></span>
-                Today
-            </button>
-            <button class="upcomingTask">
-                <span class="upcomingIcon"></span>
-                Upcoming
-            </button>
-            <button class="completeTask">
-                <span class="completeIcon"></span>
-                Completed
-            </button>
-            <button class="importantTask" style="display: flex;">
-                <span class="importantIcon"></span>
-                Important
-            </button>
+            <div class="primaryButton">
+                <button class="allTasks">
+                    <span class="material-symbols-outlined">
+                        all_inbox
+                    </span>
+                    <span class="mainButton">All Tasks</span>
+                </button>
+                <button class="todayTask">
+                    <span class="material-symbols-outlined">
+                        <span class="mainButton">today</span>
+                    </span>
+                    <span class="mainButton">Today</span>
+                </button>
+                <button class="upcomingTask">
+                    <span class="material-symbols-outlined">
+                        event_upcoming
+                    </span>
+                    <span class="mainButton">Upcoming</span>
+                </button>
+                <button class="completeTask">
+                    <span class="material-symbols-outlined">
+                        done_outline
+                    </span>
+                    <span class="mainButton">Completed</span>
+                </button>
+                <button class="importantTask" style="display: flex;">
+                    <span class="material-symbols-outlined">
+                        priority_high
+                    </span>
+                    <span class="mainButton">Important</span>
+                </button>
+            </div>
 
             <div class="projects">
                 <div class="projectTitle">
                     <span>My Projects</span>
-                    <button class="addProject" id="openModal">
-                        <span>&#xFF0B</span>
-                    </button>
+                    <div class="groupAddMinimize">
+                        <button class="addProject" id="openModal">
+                            <span class="material-symbols-outlined">
+                                add
+                            </span>
+                        </button>
+                        <button class="minimize">
+                            <span class="material-symbols-outlined iconMin">
+                                keyboard_arrow_down
+                            </span>
+                        </button>
+                    </div>
+
                 </div>
                 <div class="addedProjects">
                 </div>
@@ -57,9 +81,9 @@
                         <textarea class="descrip" type="text" name="descrip" placeholder="Description"></textarea>
                         <input type="date" name="date" placeholder="DD-MM-YYYY">
                         <select name="priority" id="priority">
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
                             <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
                             <option value="" selected>Priority</option>
                         </select>
                         <div class="line"></div>

@@ -6,11 +6,15 @@ export class Project {
         this.name = name;
         Project.#allProjects[name] = this;
     }
-
+    removeProject(projectName) {
+        if (Project.#allProjects[projectName]) {
+            delete Project.#allProjects[projectName];
+        }
+    }
+    
     addTask(task) {
         if (!task) return;
         this.#tasks.push(task);
-
     }
 
     removeTask(taskId) {

@@ -32,6 +32,20 @@ $poppins: 'Poppins', sans-serif;
     }
 
     .sidebar {
+        .primaryButton {
+            button {
+                .material-symbols-outlined {
+                    fill: red;
+                    font-size: 0.9rem;
+                    align-self: center;
+                    // color: red;
+                    display: block;
+                    /* remove inline spacing */
+                }
+
+            }
+        }
+
         padding-top: 30px;
         background-color: $sidebar;
         grid-area: sidebar;
@@ -41,6 +55,7 @@ $poppins: 'Poppins', sans-serif;
             color: rgba(0, 0, 0, 0.7);
             width: 100%;
             display: flex;
+            gap: 8px;
             border-style: none;
             background-color: transparent;
             cursor: pointer;
@@ -69,6 +84,8 @@ $poppins: 'Poppins', sans-serif;
 
             .projectTitle {
                 // border: 2px solid $black;
+                background-color: #6b63ff23;
+                border-radius: 5px;
                 padding: 5px 5px;
                 display: flex;
                 align-items: center;
@@ -78,35 +95,58 @@ $poppins: 'Poppins', sans-serif;
 
 
                 &:hover {
-                    background-color: #544e4d2c;
+                    // background-color: #544e4d2c;
                     border-radius: 5px;
                     cursor: pointer;
 
-                    button {
-                        opacity: 1;
+                    .groupAddMinimize {
+                        .addProject {
+                            opacity: 1;
+                            // border: 1px solid red;
+                        }
                     }
                 }
 
-                button {
-                    opacity: 1;
-                    color: rgba(0, 0, 0, 0.597);
-                    ;
+                .groupAddMinimize {
+                    // opacity: 0;
+                    display: flex;
+                    gap: 5px;
                     margin-left: auto;
-                    margin-right: 20px;
-                    border-style: none;
-                    border-radius: 5px;
-                    width: min-content;
-                    padding: 0px 5px;
+                    width: max-content;
+                    // border: 1px solid red;
 
+                    button {
+                        // opacity: 0;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 2px;
+                        // border-style: none;
+                        border-radius: 5px;
+                        width: min-content;
 
-                    span {
-                        position: relative;
-                        font-size: 1rem;
+                        // border: 1px solid blue;
+                        span {
+                            font-size: 20px;
+                        }
+                    }
+
+                    .addProject {
+                        opacity: 0;
+                    }
+
+                    .minimize {
+                        opacity: 0;
                     }
                 }
+
             }
 
             .addedProjects {
+
+                &.hide {
+                    display: none;
+                }
 
                 // border: 1px solid $black;
                 button {
@@ -114,8 +154,19 @@ $poppins: 'Poppins', sans-serif;
 
                     span::after {
                         content: '#';
+                        font-size: 0.9rem;
                         color: rgba(0, 0, 0, 0.597);
-                        padding-right: 4px;
+                        // padding-right: 4px;
+                    }
+                }
+            }
+        }
+
+        &:hover {
+            .projectTitle {
+                .groupAddMinimize {
+                    .minimize {
+                        opacity: 1;
                     }
                 }
             }
@@ -156,11 +207,12 @@ $poppins: 'Poppins', sans-serif;
 
                 border-radius: 15px;
                 background-color: white;
-                border: 1px solid rgba(0, 0, 0, 0.766);
+                // background-color: red;
+                // border: 1px solid rgba(0, 0, 0, 0.766);
                 padding: 20px 20px 10px 20px;
                 width: 100%;
                 max-width: 100vw;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
                 // text-align: center;
 
                 #cancel {
@@ -295,17 +347,29 @@ $poppins: 'Poppins', sans-serif;
         }
 
         .wrapper {
-
             width: 100%;
 
             .tasks {
                 .completedContainer {
-                    .projectSection{
-                        border: 1px solid red;
+                    // border: 1px solid red;
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 20px;
+
+                    .projectSection {
+                        position: relative;
+                        // border: 1px solid red;
+                        margin-top: 20px;
+
                         &.collapsed {
+
                             .allTasks {
                                 display: none;
                             }
+                        }
+
+                        &:first-child {
+                            margin-top: 0;
                         }
                     }
 
@@ -313,27 +377,27 @@ $poppins: 'Poppins', sans-serif;
                         padding: 5px 0 0 5px;
                         display: flex;
                         align-items: center;
-                        font-size: 17px;
+                        font-size: 18px;
+
                         font-weight: 500;
 
+                        .projectNameSpan {
+
+                            font-weight: bold;
+                            font-size: 20px;
+                        }
+
                         .collapse {
-                            margin-left: auto;
-                            border: none;
-                            background-color: transparent;
-                            font-size: 17px;
+                            position: absolute;
+                            margin-left: -35px;
+                            font-size: 20px;
                             cursor: pointer;
+                            border-radius: 5px;
+
                             // transform: rotate(90deg);
-                            transition: transform 0.3s ease;
-
-                            &.collapsed {
-                                transform: rotate(0deg);
+                            &:hover {
+                                background: #0000000a;
                             }
-
-                            // &.collapsed::after {
-                            //     content: '>';
-                            //     color: rgba(0, 0, 0, 0.597);
-                            //     padding-right: 4px;
-                            // }
                         }
                     }
                 }
@@ -341,16 +405,26 @@ $poppins: 'Poppins', sans-serif;
                 // .edit-modal {}
 
                 .allTasks {
+
                     // padding-bottom: px;
-                    .taskContainer {
+                    .taskWrap {
+                        cursor: pointer;
+                        column-gap: 8px;
+                        display: grid;
+                        grid-template-columns: max-content 1fr;
+                        grid-template-rows: auto;
                         position: relative;
                         // border: 2px solid green;
                         -top: 4px;
                         border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-                        display: flex;
+                        // display: flex;
                         align-items: center;
-                        gap: 8px;
+                        // gap: 8px;
                         padding: 5px 0;
+
+                        // * {
+                        //     border: 1px solid red;
+                        // }
 
                         &:hover {
                             .buttonContainer {
@@ -360,7 +434,9 @@ $poppins: 'Poppins', sans-serif;
 
 
                         input[type="radio"] {
-                            flex-shrink: 0;
+                            grid-column: 1/2;
+                            grid-row: 1/-1;
+                            // flex-shrink: 0;
                             align-self: flex-start;
                             margin-top: 6px;
                             cursor: pointer;
@@ -451,7 +527,8 @@ $poppins: 'Poppins', sans-serif;
                         }
 
                         .taskTitle {
-                            cursor: pointer;
+                            grid-column: 2/-1;
+                            // cursor: pointer;
                             flex: 1;
                             // border: 1px solid red;
                             height: 100%;
@@ -468,51 +545,16 @@ $poppins: 'Poppins', sans-serif;
                             }
                         }
 
-                        .buttonContainer {
-                            margin-top: 4px;
-                            align-self: flex-start;
-                            height: 100%;
-                            // opacity: 0;
-                            display: flex;
-                            gap: 8px;
-                            margin-left: auto;
-                            padding-right: 20px;
+                        .description {
+                            // cursor: pointer;
+                            grid-column: 2/-1;
+                            width: 100%;
+                            color: rgba(0, 0, 0, 0.479);
+                        }
 
-                            .deleteBtn {
-                                opacity: 0.5;
-                                background-color: rgba(0, 0, 0, 0.3);
-                                border-radius: 5px;
-                                font-weight: bold;
-                                border: none;
-                                // padding: 0px 5px;
-                                height: 30px;
-                                margin-left: auto;
-                                cursor: pointer;
-
-                                &:hover {
-                                    opacity: 1;
-                                    background-color: #d33322;
-                                    color: whitesmoke;
-                                }
-                            }
-
-                            .editBtn {
-                                opacity: 0.5;
-                                background-color: rgba(0, 0, 0, 0.3);
-                                border-radius: 5px;
-                                font-weight: bold;
-                                border: none;
-                                // padding: 0px 5px;
-                                height: 30px;
-                                cursor: pointer;
-                                margin-left: auto;
-
-                                &:hover {
-                                    opacity: 1;
-                                    background-color: #d33322;
-                                    color: whitesmoke;
-                                }
-                            }
+                        .date {
+                            grid-column: 2/-1;
+                            color: rgba(0, 0, 0, 0.479);
                         }
                     }
                 }
@@ -520,6 +562,7 @@ $poppins: 'Poppins', sans-serif;
 
             .title {
                 padding-bottom: 10px;
+                text-transform: uppercase;
             }
 
             .addButton {
@@ -625,11 +668,11 @@ $poppins: 'Poppins', sans-serif;
 .addTaskModal {
     border-radius: 15px;
     background-color: white;
-    border: 1px solid rgba(0, 0, 0, 0.766);
+    // border: 1px solid rgba(0, 0, 0, 0.766);
     padding: 20px 20px 10px 20px;
     width: 100%;
     max-width: 100vw;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.507);
     // text-align: center;
 
     #cancel {
@@ -754,7 +797,8 @@ $poppins: 'Poppins', sans-serif;
 }
 
 .modal-content {
-    border: 1px solid red;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.425);
+
     position: relative;
     z-index: 1;
     background: white;
