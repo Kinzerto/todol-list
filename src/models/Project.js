@@ -2,23 +2,47 @@ export class Project {
     static #allProjects = {};
     #tasks = [];
     constructor(name) {
-        if (!name || Project.#allProjects[name]) return;
+        if (!name) throw new Error('Project name required');
+        if (Project.#allProjects[name]) {
+            throw new Error('Project already exists');
+        }
+
         this.name = name;
         Project.#allProjects[name] = this;
     }
-    removeProject(projectName) {
+
+    static removeProject(projectName) {
         if (Project.#allProjects[projectName]) {
             delete Project.#allProjects[projectName];
         }
     }
-    
+
     addTask(task) {
         if (!task) return;
         this.#tasks.push(task);
     }
 
-    removeTask(taskId) {
-        this.#tasks = this.#tasks.filter((task) => task.id !== taskId);
+    extractTask(taskId) {
+        const index = this.#tasks.findIndex(task => task.id === taskId);
+        if (index === -1) return null;
+
+        const [task] = this.#tasks.splice(index, 1);
+        console.log(task);
+        return task;
+
+    }
+
+    moveTask(taskId, fromName, toName,updatedData) {
+        const from = Project.allProjects[fromName];
+        const to = Project.allProjects[toName];
+
+        if (!from || !to) return;
+
+        const task = from.extractTask(taskId);
+        if (!task) return;
+
+        to.addTask(task);
+        to.editTask(taskId,updatedData)
     }
 
     toggleTaskCompletion(taskId) {
@@ -30,6 +54,7 @@ export class Project {
 
     editTask(taskId, updatedData) {
         const task = this.#tasks.find((task) => task.id === taskId);
+        console.log(updatedData);
         if (task) {
             Object.assign(task, updatedData);
         }

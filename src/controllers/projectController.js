@@ -1,9 +1,11 @@
 //projectController.js
 import { Project } from "../models/Project.js"
 import { AddTask } from "../models/Tasks.js"//delete later
-import { createElement } from "../utils/createElement.js";
+import { createElement } from "../utils/tools.js";
+
 
 import { tasksDisplay } from "../controllers/taskController.js";
+import { renderTasks, filterTask } from "../scripts/list.js";
 import { state } from "../state.js";
 
 // this Elmemt  shows ALL you projects you input(PS: its a container/wrapper) 
@@ -13,23 +15,48 @@ const addedProjects = document.querySelector('.addedProjects');
 export function createProject(name) {
     if (!name) return;
     const newProject = new Project(name);
-    // projectDisplay(newProject);
+    renderProject(newProject)
 
+    return newProject;
+}
+
+function renderProject(newProject) {
+    console.log(newProject);
     const DOMButtons = createElement('button', 'project', '', addedProjects);
-    const spanHash = createElement('span', 'hash', '', DOMButtons);
-    DOMButtons.append(newProject.name);
+
+    DOMButtons.dataset.projName = newProject.name;
+
+    const spanHash = createElement('span', 'hash', '#', DOMButtons);
+
+    const projName = createElement('span', 'projName', newProject.name, DOMButtons);
+    // DOMButtons.append(newProject.name);
+
+    const deleteIcon = createElement('span', 'material-symbols-outlined', 'delete', DOMButtons);
+
+    deleteIcon.addEventListener('click', (e) => {
+        console.log('click');
+        e.stopPropagation();
+        Project.removeProject(newProject.name);
+        state.currentView = 'allTasks';
+        filterTask()
+        DOMButtons.remove();
+        console.log(Project.allProjects);
+
+    })
 
     DOMButtons.addEventListener('click', () => {
         state.currentProject = newProject
         tasksDisplay();
+
         // console.log(currentProject);
 
     });
 
-    return newProject;
 }
 const testProject = createProject('Test 1');
 const testProject2 = createProject('Test 2');
+
+console.log(testProject);
 testProject.addTask(new AddTask('Task 1', 'desc 1', '', 'high', true));
 
 testProject.addTask(new AddTask('Task 2', 'desc 2', '', 'high'));

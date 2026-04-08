@@ -1,8 +1,7 @@
 import { AddTask } from "../models/Tasks.js"
 import { state } from "../state.js";
-import { renderTasks } from "../scripts/list.js";
 import { tasks, addButton } from '../index.js';
-
+import { renderTasks } from "../viewer/renderTasks.js";
 
 const addTaskModalContainer = document.getElementById('addTaskModalContainer');
 const cancel = document.getElementById('cancel');
