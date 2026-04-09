@@ -1,9 +1,11 @@
 import { Project } from "../models/Project.js";
-export function createElement (element, className, text, parent){
+import { compareAsc, format, differenceInYears, differenceInCalendarDays, isTomorrow, isToday } from "date-fns";
+
+export function createElement(element, className, text, parent) {
     const el = document.createElement(element);
-    if(className) el.className = className;
-    if(text) el.textContent = text;
-    if(parent) parent.appendChild(el);
+    if (className) el.className = className;
+    if (text) el.textContent = text;
+    if (parent) parent.appendChild(el);
     return el;
 
 }
@@ -16,4 +18,31 @@ export function findProjectNameByTaskId(targetId) {
         }
     }
     return null;
+}
+
+export function formatSmartDate(dateInput) {
+    if (!dateInput) return '';
+
+    const date = new Date(dateInput);
+    const today = new Date();
+
+    const diffDays = differenceInCalendarDays(date, today);
+
+    if (isToday(date)) {
+        return 'Today';
+    }
+
+    if (isTomorrow(date)) {
+        return 'Tomorrow';
+    }
+
+    if (diffDays > 1 && diffDays <= 7) {
+        return format(date, 'EEEE'); // Wednesday
+    }
+
+    if (differenceInYears(date, today) >= 1) {
+        return format(date, 'd MMM yyyy');
+    }
+    
+    return format(date, 'd MMM');
 }

@@ -1,9 +1,10 @@
-import { createElement, findProjectNameByTaskId } from "../utils/tools.js";
+import { createElement, findProjectNameByTaskId, formatSmartDate} from "../utils/tools.js";
 import { state } from "../state.js";
 import { tasks, addButton, headerTitle } from "../index.js";
 import { showDetailsForm } from "../scripts/list.js";
 import { Project } from "../models/Project.js";
 import { filterTask, saveChange, deleteDetail } from "../scripts/list.js";
+
 
 const projectNames = document.getElementById('project');
 
@@ -32,7 +33,7 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
     taskList.forEach((task) => {
         const allTasks = createElement('div', 'allTasks', '', parentContainer);
         const taskWrap = createElement('div', 'taskWrap', '', allTasks);
-        
+
         taskWrap.dataset.id = task.id;
 
         const taskTitle = createElement('div', 'taskTitle', task.title, taskWrap);
@@ -62,7 +63,23 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
             showDetailsForm.elements['priority'].value = task.priority || '';
         });
         const description = createElement('div', 'description', task.description, taskWrap);
-        const date = createElement('div', 'date', task.dueDate, taskWrap);
+
+        let due = '';
+
+        if (task.dueDate) {
+            // const dateData = new Date(task.dueDate);
+            // const now = new Date();
+            // const diffYears = differenceInYears(dateData, now);
+            // const due = diffYears >= 1 ? format(dateData,'d MMM yyyy') : format(dateData,'d MMM');
+            const due = formatSmartDate(task.dueDate)
+
+            const date = createElement('div', 'date', due, taskWrap);
+            const dateIcon = document.createElement('span');
+            dateIcon.classList.add('material-symbols-outlined');
+            dateIcon.textContent = 'date_range';
+
+            date.prepend(dateIcon); // replace parent with your container
+        }
 
         const radio = createElement('input', '', '', taskWrap);
         radio.type = 'radio';

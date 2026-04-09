@@ -105,7 +105,7 @@ export function filterTask() {
         collapse.textContent = 'keyboard_arrow_down';
         projectHeader.prepend(collapse);
         // const collapse = createElement('span', 'collapse', '▼', projectHeader);
-
+        // section.classList.add('collapsed');
         collapse.addEventListener('click', (e) => {
             collapse.textContent = collapse.textContent === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
             e.stopPropagation();
