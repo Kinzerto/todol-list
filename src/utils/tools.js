@@ -36,7 +36,7 @@ export function formatSmartDate(dateInput) {
         return 'Tomorrow';
     }
 
-    if (diffDays > 1 && diffDays <= 7) {
+    if (diffDays > 1 && diffDays <= 6) {
         return format(date, 'EEEE'); // Wednesday
     }
 

@@ -1,15 +1,10 @@
 //projectController.js
 import { Project } from "../models/Project.js"
 import { AddTask } from "../models/Tasks.js"//delete later
-import { createElement } from "../utils/tools.js";
-
-
-import { tasksDisplay } from "../controllers/taskController.js";
-import { renderTasks, filterTask } from "../scripts/list.js";
-import { state } from "../state.js";
+import { renderProject } from "../viewer/renderProject.js";
 
 // this Elmemt  shows ALL you projects you input(PS: its a container/wrapper) 
-const addedProjects = document.querySelector('.addedProjects');
+export const addedProjects = document.querySelector('.addedProjects');
 
 // CREATE PROJECT MODAL FORM SUBMISSION
 export function createProject(name) {
@@ -20,39 +15,7 @@ export function createProject(name) {
     return newProject;
 }
 
-function renderProject(newProject) {
-    console.log(newProject);
-    const DOMButtons = createElement('button', 'project', '', addedProjects);
 
-    DOMButtons.dataset.projName = newProject.name;
-
-    const spanHash = createElement('span', 'hash', '#', DOMButtons);
-
-    const projName = createElement('span', 'projName', newProject.name, DOMButtons);
-    // DOMButtons.append(newProject.name);
-
-    const deleteIcon = createElement('span', 'material-symbols-outlined', 'delete', DOMButtons);
-
-    deleteIcon.addEventListener('click', (e) => {
-        console.log('click');
-        e.stopPropagation();
-        Project.removeProject(newProject.name);
-        state.currentView = 'allTasks';
-        filterTask()
-        DOMButtons.remove();
-        console.log(Project.allProjects);
-
-    })
-
-    DOMButtons.addEventListener('click', () => {
-        state.currentProject = newProject
-        tasksDisplay();
-
-        // console.log(currentProject);
-
-    });
-
-}
 const testProject = createProject('Test 1');
 const testProject2 = createProject('Test 2');
 

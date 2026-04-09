@@ -1,9 +1,12 @@
-import { createElement, findProjectNameByTaskId, formatSmartDate} from "../utils/tools.js";
+import { createElement, findProjectNameByTaskId, formatSmartDate } from "../utils/tools.js";
 import { state } from "../state.js";
 import { tasks, addButton, headerTitle } from "../index.js";
-import { showDetailsForm } from "../scripts/list.js";
+// import { showDetailsForm } from "../scripts/list.js";
 import { Project } from "../models/Project.js";
-import { filterTask, saveChange, deleteDetail } from "../scripts/list.js";
+import { saveChange, deleteDetail, showDetailsForm } from "../index.js";
+import { filterTask } from "../controllers/filterTaskController.js";
+
+import { format } from "date-fns";
 
 
 const projectNames = document.getElementById('project');
@@ -18,7 +21,7 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
         headerTitle.textContent = state.currentProject.name;
         const addButtonContainer = createElement('div', 'addButtonContainer', '', addButton);
         //ADD TASK BUTTON
-        createElement('div', 'plusIcon', "\uFF0B", addButtonContainer);
+        createElement('span', 'material-symbols-outlined', 'add', addButtonContainer);
         createElement('button', 'addTaskBtn', 'Add Task', addButtonContainer);
 
         //open modal
@@ -38,8 +41,10 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
 
         const taskTitle = createElement('div', 'taskTitle', task.title, taskWrap);
         taskTitle.classList.toggle('completed', task.completed);
+
         taskWrap.addEventListener('click', (e) => {
             saveChange.textContent = 'Update'
+            deleteDetail.textContent = 'Delete'
             state.adding = false
             console.log(taskWrap.dataset.id);
             projectNames.replaceChildren();
@@ -67,13 +72,23 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
         let due = '';
 
         if (task.dueDate) {
-            // const dateData = new Date(task.dueDate);
-            // const now = new Date();
-            // const diffYears = differenceInYears(dateData, now);
-            // const due = diffYears >= 1 ? format(dateData,'d MMM yyyy') : format(dateData,'d MMM');
+            // format date to smart date
             const due = formatSmartDate(task.dueDate)
+            const weeks = new Date(task.dueDate);
+            const dayName = format(weeks, 'EEEE');
 
             const date = createElement('div', 'date', due, taskWrap);
+            if (due === 'Today') {
+                date.style.color = 'green';
+            } else if (due === 'Tomorrow') {
+                date.style.color = 'orange';
+                console.log(dayName);
+            }else if (due === dayName) {
+                date.style.color = 'blue';
+            }
+            else {
+                date.style.color = 'color: rgba(0, 0, 0, 0.479)';
+            }
             const dateIcon = document.createElement('span');
             dateIcon.classList.add('material-symbols-outlined');
             dateIcon.textContent = 'date_range';
@@ -99,11 +114,5 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
                 filterTask()
             }
         });
-
-        // task title
-
-
-
     });
-
 }

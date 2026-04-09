@@ -3,7 +3,11 @@ import './styles/style.scss';
 import { createProject } from "./controllers/projectController.js"
 
 import { state } from "./state.js"
-import { filterTask } from './scripts/list.js';
+import { filterTask } from './controllers/filterTaskController.js';
+import { Project } from "./models/Project.js";
+import { renderTasks } from "./viewer/renderTasks.js";
+import { findProjectNameByTaskId } from './utils/tools.js';
+import { AddTask } from './models/Tasks.js';
 
 
 const content = document.querySelector('.content');
@@ -22,6 +26,171 @@ document.addEventListener('DOMContentLoaded', function display() {
 
     state.currentView = 'allTasks';
     filterTask();
+});
+
+
+
+const projectNames = document.getElementById('project');
+
+const primary = document.querySelector('.primaryButton');
+
+primary.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    console.log(btn.classList[0]);
+    const className = btn.classList[0];
+
+    switch (className) {
+        case 'add':
+            deleteDetail.textContent = 'Cancel'
+            showDetailsForm.reset();
+            detailsModal.classList.add('active');
+            saveChange.textContent = 'Add Task'
+            state.adding = true
+            projectNames.replaceChildren();
+
+            for (let key in Project.allProjects) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = key;
+                projectNames.appendChild(option);
+            }
+            if (state.currentView === 'project') {
+                renderTasks()
+            } else {
+                filterTask()
+            }
+            break;
+        case 'allTasks':
+            console.log('click');
+            state.currentView = 'allTasks';
+            filterTask();
+            break;
+
+        case 'todayTask':
+            state.currentView = 'today';
+            filterTask();
+            break;
+
+        case 'upcomingTask':
+            state.currentView = 'upcoming';
+            filterTask();
+            break;
+
+        case 'completeTask':
+            state.currentView = 'completed';
+            filterTask();
+            break;
+
+        case 'importantTask':
+            state.currentView = 'important';
+            filterTask();
+            break;
+
+        default:
+            break;
+    }
+})
+
+
+const detailsModal = document.querySelector('.detailsModal');
+const detailsContent = detailsModal.querySelector('.modal-content');
+export const showDetailsForm = detailsContent.querySelector('form.showDetailsForm');
+
+
+const modalOverlay = detailsModal.querySelector('.modalOverlay');
+export const saveChange = document.querySelector('#saveChange');
+const closeDetailsModal = detailsContent.querySelector('#closeDetailsModal');
+export const deleteDetail = showDetailsForm.querySelector('#delete');
+
+[modalOverlay, closeDetailsModal].forEach((el) => {
+    el.addEventListener('click', () => {
+        detailsModal.classList.remove('active')
+    });
+})
+
+
+showDetailsForm.addEventListener('submit', (e) => {
+    saveChange.textContent = 'Update'
+    e.preventDefault();
+
+    const formDataDetail = new FormData(showDetailsForm);
+    const to = formDataDetail.get("project");
+
+    const inputData = {
+        title: formDataDetail.get("title"),
+        description: formDataDetail.get("descrip"),
+        dueDate: formDataDetail.get("date"),
+        priority: formDataDetail.get("priority")
+    };
+
+    if (!inputData.title) return;
+
+    const projectName = findProjectNameByTaskId(state.currentDivId);
+
+    // 🔥 EDIT MODE
+    if (!state.adding) {
+
+        const updatedData = {
+            title: inputData.title,
+            description: inputData.description,
+            dueDate: inputData.dueDate,
+            priority: inputData.priority
+        };
+
+        if (state.currentProjectName.name === to) {
+            // same project → just edit
+            projectName.editTask(state.currentDivId, updatedData);
+        } else {
+            // different project → move + update
+            projectName.moveTask(
+                state.currentDivId,
+                state.currentProjectName.name,
+                to,
+                updatedData
+            );
+        }
+    }
+
+    // ADD MODE
+    if (state.adding) {
+        const newTask = new AddTask(
+            inputData.title,
+            inputData.description,
+            inputData.dueDate,
+            inputData.priority
+        );
+
+        Project.addTask(to, newTask);
+    }
+
+    // 🔄 Re-render
+    if (state.currentView === 'project') {
+        renderTasks();
+    } else {
+        filterTask();
+    }
+
+    // close modal
+    detailsModal.classList.remove('active');
+
+});
+
+deleteDetail.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (!state.adding) {
+        state.currentProjectName.removeTask(state.currentDivId);
+
+        // renderTasks();
+        if (state.currentView === 'project') {
+            renderTasks()
+        } else {
+            filterTask()
+        }
+    }
+    detailsModal.classList.remove('active');
+
 });
 
 
