@@ -12,7 +12,7 @@ export function findProjectNameByTaskId(targetId) {
     for (const [projectName, project] of Object.entries(Project.allProjects)) {
         const found = project.showList.some(task => task.id === targetId);
         if (found) {
-            return project
+            return Project.allProjects[projectName]
         }
     }
     return null;

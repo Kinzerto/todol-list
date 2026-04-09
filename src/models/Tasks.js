@@ -5,8 +5,8 @@ export class AddTask {
         this.dueDate = dueDate;
         this.priority = priority;
         this.completed = completed;
-        this.notes = notes;
-        this.checklist = checklist;
+        this.notes = '';
+        this.checklist = '';
         this.id = crypto.randomUUID();
     }
 }

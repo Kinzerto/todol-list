@@ -3,6 +3,7 @@ import { state } from "../state.js";
 import { tasks, addButton, headerTitle } from "../index.js";
 import { showDetailsForm } from "../scripts/list.js";
 import { Project } from "../models/Project.js";
+import { filterTask, saveChange, deleteDetail } from "../scripts/list.js";
 
 const projectNames = document.getElementById('project');
 
@@ -31,14 +32,18 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
     taskList.forEach((task) => {
         const allTasks = createElement('div', 'allTasks', '', parentContainer);
         const taskWrap = createElement('div', 'taskWrap', '', allTasks);
+        
         taskWrap.dataset.id = task.id;
 
-
-
+        const taskTitle = createElement('div', 'taskTitle', task.title, taskWrap);
+        taskTitle.classList.toggle('completed', task.completed);
         taskWrap.addEventListener('click', (e) => {
-            console.log(state.currentView);
+            saveChange.textContent = 'Update'
+            state.adding = false
+            console.log(taskWrap.dataset.id);
             projectNames.replaceChildren();
             state.currentProjectName = findProjectNameByTaskId(taskWrap.dataset.id);
+            console.log(state.currentProjectName);
             for (let key in Project.allProjects) {
                 const option = document.createElement('option');
                 option.value = key;
@@ -48,7 +53,7 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
             detailsModal.classList.add('active');
             state.currentDivId = task.id;
 
-            console.log(state.currentProjectName);
+
 
             showDetailsForm.elements['project'].value = state.currentProjectName.name;
             showDetailsForm.elements['title'].value = task.title;
@@ -56,6 +61,8 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
             showDetailsForm.elements['date'].value = task.dueDate || '';
             showDetailsForm.elements['priority'].value = task.priority || '';
         });
+        const description = createElement('div', 'description', task.description, taskWrap);
+        const date = createElement('div', 'date', task.dueDate, taskWrap);
 
         const radio = createElement('input', '', '', taskWrap);
         radio.type = 'radio';
@@ -69,8 +76,6 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
             const state = findProjectNameByTaskId(task.id);
             console.log(state);
             state.toggleTaskCompletion(task.id)
-            // state.currentProject.toggleTaskCompletion(task.id);
-            taskTitle.classList.add('completed');
             if (!hideAddBtn) {
                 renderTasks()
             } else {
@@ -79,9 +84,8 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
         });
 
         // task title
-        const taskTitle = createElement('div', 'taskTitle', task.title, taskWrap);
-        const description = createElement('div', 'description', task.description, taskWrap);
-        const date = createElement('div', 'date', task.dueDate, taskWrap);
+
+
 
     });
 

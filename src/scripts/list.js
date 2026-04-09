@@ -12,15 +12,41 @@ const modalOverlay = detailsModal.querySelector('.modalOverlay');
 const detailsContent = detailsModal.querySelector('.modal-content');
 export const showDetailsForm = detailsContent.querySelector('form.showDetailsForm');
 const closeDetailsModal = detailsContent.querySelector('#closeDetailsModal');
-const deleteDetail = showDetailsForm.querySelector('#delete');
+export const deleteDetail = showDetailsForm.querySelector('#delete');
 
 const groupRadioTitleDesc = showDetailsForm.querySelector('.groupRadioTitleDesc');
 const select = showDetailsForm.querySelector('.buttons .ProjectName #project');
 
+export const saveChange = document.querySelector('#saveChange');
+const add = document.querySelector('.add');
 const completed = document.querySelector('.completeTask');
 const important = document.querySelector('button.importantTask');
 const allTasks = document.querySelector('.allTasks');
 
+const projectNames = document.getElementById('project');
+
+add.addEventListener('click', () => {
+    deleteDetail.textContent = 'Cancel'
+    showDetailsForm.reset();
+    detailsModal.classList.add('active');
+    saveChange.textContent = 'Add Task'
+    state.adding = true
+    console.log(state.currentView);
+    projectNames.replaceChildren();
+
+    for (let key in Project.allProjects) {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = key;
+        projectNames.appendChild(option);
+    }
+    if (state.currentView === 'project') {
+        renderTasks()
+    } else {
+        filterTask()
+    }
+
+})
 completed.addEventListener('click', () => {
     state.currentView = 'completed';
     filterTask();
@@ -97,61 +123,87 @@ export function filterTask() {
     });
 })
 
-
 showDetailsForm.addEventListener('submit', (e) => {
-
+    saveChange.textContent = 'Update'
     e.preventDefault();
 
     const formDataDetail = new FormData(showDetailsForm);
     const to = formDataDetail.get("project");
+
     const inputData = {
         title: formDataDetail.get("title"),
         description: formDataDetail.get("descrip"),
         dueDate: formDataDetail.get("date"),
         priority: formDataDetail.get("priority")
     };
+
     if (!inputData.title) return;
+
     const projectName = findProjectNameByTaskId(state.currentDivId);
 
-    console.log(to);
-    console.log(projectName);
+    // 🔥 EDIT MODE
+    if (!state.adding) {
 
-    if (state.currentProjectName.name === to) {
-        projectName.editTask(state.currentDivId, inputData);
-    } else {
-        projectName.moveTask(state.currentDivId, state.currentProjectName.name, to,inputData)
+        const updatedData = {
+            title: inputData.title,
+            description: inputData.description,
+            dueDate: inputData.dueDate,
+            priority: inputData.priority
+        };
+
+        if (state.currentProjectName.name === to) {
+            // same project → just edit
+            projectName.editTask(state.currentDivId, updatedData);
+        } else {
+            // different project → move + update
+            projectName.moveTask(
+                state.currentDivId,
+                state.currentProjectName.name,
+                to,
+                updatedData
+            );
+        }
     }
 
+    // ADD MODE
+    if (state.adding) {
+        const newTask = new AddTask(
+            inputData.title,
+            inputData.description,
+            inputData.dueDate,
+            inputData.priority
+        );
 
+        Project.addTask(to, newTask);
+    }
+
+    // 🔄 Re-render
     if (state.currentView === 'project') {
-        renderTasks()
+        renderTasks();
     } else {
-        filterTask()
+        filterTask();
     }
 
+    // close modal
     detailsModal.classList.remove('active');
-
 
 });
 
 deleteDetail.addEventListener('click', (e) => {
-    console.log(state.currentProjectName);
     e.preventDefault();
-    state.currentProjectName.extractTask(state.currentDivId);
+    if (!state.adding) {
+        console.log('runned');
+        state.currentProjectName.removeTask(state.currentDivId);
 
-
-
-
-    detailsModal.classList.remove('active');
-    // renderTasks();
-    if (state.currentView === 'project') {
-        renderTasks()
-    } else {
-        filterTask()
+        // renderTasks();
+        if (state.currentView === 'project') {
+            renderTasks()
+        } else {
+            filterTask()
+        }
     }
+    detailsModal.classList.remove('active');
 
-    console.log(Project.allProjects);
 });
-
 
 
