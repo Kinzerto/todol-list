@@ -6,7 +6,6 @@ import { renderTasks } from "../viewer/renderTasks.js";
 const addTaskModalContainer = document.getElementById('addTaskModalContainer');
 const cancel = document.getElementById('cancel');
 const addTaskForm = document.querySelector('.AddTaskForm');
-const inputTitle = addTaskForm.querySelector('input[name="title"]');
 
 export function tasksDisplay() {
     if (!state.currentProject) return;
