@@ -1,6 +1,5 @@
 import './styles/reset.scss';
 import './styles/style.scss';
-import { createProject } from "./controllers/projectController.js"
 
 import { state } from "./state.js"
 import { filterTask } from './controllers/filterTaskController.js';
@@ -8,7 +7,8 @@ import { Project } from "./models/Project.js";
 import { renderTasks } from "./viewer/renderTasks.js";
 import { findProjectNameByTaskId } from './utils/tools.js';
 import { AddTask } from './models/Tasks.js';
-
+import { displayProject } from './controllers/projectController.js';
+import { countData } from './controllers/count.js';
 
 const content = document.querySelector('.content');
 const wrapper = content.querySelector('.wrapper');
@@ -17,18 +17,12 @@ export const headerTitle = document.querySelector('.title');
 export const tasks = wrapper.querySelector('.tasks');
 export const addButton = wrapper.querySelector('.addButton');
 
-
-
-
 document.addEventListener('DOMContentLoaded', function display() {
-    const container = document.querySelector('.container');
-    const header = document.querySelector('header');
-
-    state.currentView = 'allTasks';
+    state.currentView = 'home';
+    displayProject();
+    countData();
     filterTask();
 });
-
-
 
 const projectNames = document.getElementById('project');
 
@@ -38,7 +32,7 @@ primary.addEventListener('click', (e) => {
     e.stopPropagation();
     const btn = e.target.closest('button');
     if (!btn) return;
-    console.log(btn.classList[0]);
+    // console.log(btn.classList[0]);
     const className = btn.classList[0];
 
     switch (className) {
@@ -62,9 +56,9 @@ primary.addEventListener('click', (e) => {
                 filterTask()
             }
             break;
-        case 'allTasks':
-            console.log('click');
-            state.currentView = 'allTasks';
+
+        case 'home':
+            state.currentView = 'home';
             filterTask();
             break;
 
@@ -192,6 +186,8 @@ deleteDetail.addEventListener('click', (e) => {
     detailsModal.classList.remove('active');
 
 });
+
+
 
 
 
