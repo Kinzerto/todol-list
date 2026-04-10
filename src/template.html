@@ -5,7 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&display=swap"
+        rel="stylesheet">
+
 
 </head>
 
@@ -19,36 +27,42 @@
                         add
                     </span>
                     <span>Add Task</span>
+                    
                 </button>
-                <button class="allTasks">
+                <button class="home">
                     <span class="material-symbols-outlined">
-                        all_inbox
+                        home
                     </span>
-                    <span class="mainButton">All Tasks</span>
+                    <span>Home</span>
+                    <span class="homeCount count">2</span>
                 </button>
                 <button class="todayTask">
                     <span class="material-symbols-outlined">
-                        <span class="mainButton">today</span>
+                        <span>today</span>
                     </span>
-                    <span class="mainButton">Today</span>
+                    <span>Today</span>
+                    <span class="todayCount count">2</span>
                 </button>
                 <button class="upcomingTask">
                     <span class="material-symbols-outlined">
                         event_upcoming
                     </span>
-                    <span class="mainButton">Upcoming</span>
-                </button>
-                <button class="completeTask">
-                    <span class="material-symbols-outlined">
-                        check_circle
-                    </span>
-                    <span class="mainButton">Completed</span>
+                    <span>Upcoming</span>
+                    <span class="upcomingCount count">2</span>
                 </button>
                 <button class="importantTask" style="display: flex;">
                     <span class="material-symbols-outlined">
                         priority
                     </span>
-                    <span class="mainButton">Important</span>
+                    <span>Important</span>
+                    <span class="importantCount count">2</span>
+                </button>
+                <button class="completeTask">
+                    <span class="material-symbols-outlined">
+                        check_circle
+                    </span>
+                    <span>Completed</span>
+                    <span class="completedCount count">2</span>
                 </button>
             </div>
 
@@ -83,7 +97,8 @@
             <div class="addTaskModalContainer" id="addTaskModalContainer">
                 <div class="addTaskModal">
                     <form class="AddTaskForm">
-                        <textarea class="title" type="text" name="title" placeholder="What to do?" required></textarea>
+                        <textarea class="title" type="text" name="title" placeholder="What to do?" maxlength="500"
+                            required></textarea>
                         <textarea class="descrip" type="text" name="descrip" placeholder="Description"></textarea>
                         <input type="date" name="date" placeholder="DD-MM-YYYY">
                         <select name="priority" id="priority">
@@ -114,7 +129,7 @@
                         <h1>New Project</h1>
                     </label><br>
                     <input type="text" id="newProject">
-                    <input type="color" id="colorPicker">
+                    <!-- <input type="color" id="colorPicker"> -->
                     <button type="submit">Create</button>
                 </form>
 
