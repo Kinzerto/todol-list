@@ -1,16 +1,19 @@
+// @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 $black: #252525;
 $purple: #6C63FF;
 $white: #F7F7F7;
 $sidebar: #d5d5d51d;
-$poppins: 'Poppins', sans-serif;
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+// $main-font: Poppins;
+$main-font: "Montserrat", sans-serif;
+$heading-font: "Orbitron", sans-serif;
 
 
 .container {
     min-height: 100vh;
     background-color: $white;
     margin: 0 auto;
-    font-family: $poppins;
+    font-family: $main-font;
     display: grid;
     grid-template-columns: 250px 1fr;
     /* width */
@@ -34,8 +37,8 @@ $poppins: 'Poppins', sans-serif;
     .sidebar {
         .primaryButton {
             button {
+
                 .material-symbols-outlined {
-                    fill: red;
                     font-size: 16px;
                     padding: 2px;
                     align-self: center;
@@ -43,6 +46,16 @@ $poppins: 'Poppins', sans-serif;
                     display: block;
                     /* remove inline spacing */
                 }
+
+            }
+
+            .count {
+                padding-top: 3px;
+                height: 100%;
+                margin-left: auto;
+                margin-right: 5px;
+                font-size: 11px;
+                display: flex;
 
             }
 
@@ -85,6 +98,11 @@ $poppins: 'Poppins', sans-serif;
             padding: 5px 5px;
             font-size: 0.9rem;
 
+            &.active {
+                background-color: #544e4d2c;
+                border-radius: 5px;
+            }
+
             &:hover {
                 background-color: #544e4d2c;
                 border-radius: 5px;
@@ -102,19 +120,21 @@ $poppins: 'Poppins', sans-serif;
         }
 
         .projects {
-            margin-top: 54px;
+            margin-top: 10px;
 
 
             .projectTitle {
-                // border: 2px solid $black;
-                background-color: #6b63ff23;
                 border-radius: 5px;
                 padding: 5px 5px;
                 display: flex;
                 align-items: center;
+                font-family: $heading-font;
                 font-size: 17px;
-                font-weight: 500;
+                font-weight: bold;
 
+                &:hover {
+                    background-color: #544e4d2c;
+                }
 
 
                 &:hover {
@@ -176,7 +196,6 @@ $poppins: 'Poppins', sans-serif;
                 button {
                     display: flex;
                     align-items: center;
-                    // justify-content: space-between;
 
                     &:hover {
                         .editDelete {
@@ -191,15 +210,29 @@ $poppins: 'Poppins', sans-serif;
                         }
                     }
 
+                    .hash {
+                        // color: red;
+                        padding-left: 5px;
+                        padding-right: 3px;
+                    }
+
+                    .projName {
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+
+                    }
+
                     .editDelete {
                         display: flex;
                         align-items: center;
                         margin-left: auto;
+
                         span {
                             font-size: 0.9rem;
                             padding: 2px;
                             color: rgba(0, 0, 0, 0.597);
-                            // padding-right: 4px;
+                            padding-right: 5px;
                         }
 
                         .material-symbols-outlined {
@@ -293,7 +326,7 @@ $poppins: 'Poppins', sans-serif;
                     border: none;
                     outline: none;
                     font-weight: bold;
-                    font-family: $poppins;
+                    font-family: $main-font;
 
 
                     &:focus {
@@ -302,7 +335,7 @@ $poppins: 'Poppins', sans-serif;
                     }
 
                     &::placeholder {
-                        font-family: $poppins;
+                        font-family: $main-font;
                         font-weight: bold;
                     }
 
@@ -341,7 +374,7 @@ $poppins: 'Poppins', sans-serif;
                     padding: 5px;
                     border: 1px solid rgba(0, 0, 0, 0.2);
                     border-radius: 5px;
-                    font-family: $poppins;
+                    font-family: $main-font;
                     font-size: 12px;
 
                     &:focus {
@@ -356,7 +389,7 @@ $poppins: 'Poppins', sans-serif;
                     border: 1px solid rgba(0, 0, 0, 0.2);
                     background-color: whitesmoke;
                     border-radius: 5px;
-                    font-family: $poppins;
+                    font-family: $main-font;
                     font-size: 12px;
                 }
 
@@ -377,7 +410,7 @@ $poppins: 'Poppins', sans-serif;
                     // border: 1px solid red;
 
                     button {
-                        font-family: $poppins;
+                        font-family: $main-font;
                         font-size: 14px;
                         width: 100px;
                         height: 35px;
@@ -416,12 +449,17 @@ $poppins: 'Poppins', sans-serif;
                     position: relative;
                     display: grid;
                     row-gap: 8px;
+                    border-top: 1px solid red;
 
                     &.collapsed {
 
                         .allTasks {
                             display: none;
                         }
+                    }
+
+                    &:first-child {
+                        border-top: none;
                     }
                 }
 
@@ -435,9 +473,23 @@ $poppins: 'Poppins', sans-serif;
                     font-weight: 500;
 
                     .projectNameSpan {
-
+                        // background-color: red;
+                        width: 100%;
+                        font-family: $heading-font;
                         font-weight: bold;
                         font-size: 20px;
+
+                        max-height: 300px;
+                        height: 100%;
+
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 2;
+                        line-clamp: 2;
+
+                        word-break: break-word;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
 
                     .collapse {
@@ -458,11 +510,6 @@ $poppins: 'Poppins', sans-serif;
                 // .edit-modal {}
 
                 .allTasks {
-
-
-                    &:last-child {
-                        // margin-bottom: 30px;
-                    }
 
                     // padding-bottom: px;
                     .taskWrap {
@@ -584,16 +631,19 @@ $poppins: 'Poppins', sans-serif;
                         }
 
                         .taskTitle {
+                            // width: 100%;
                             grid-column: 2/-1;
-                            // cursor: pointer;
-                            flex: 1;
-                            font-size: 16px;
-                            max-height: 300px;
-                            display: flex;
-                            height: 100%;
-                            word-wrap: break-word;
-                            overflow-wrap: break-word;
-                            word-break: break-all;
+                            // font-size: 16px;
+                            max-height: 100px;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 4;
+                            line-clamp: 4;
+                            /* adjust number of lines */
+                            word-break: break-word;
+                            overflow: hidden;
+                            min-width: 0;
+
 
 
                             &.completed {
@@ -603,11 +653,17 @@ $poppins: 'Poppins', sans-serif;
                         }
 
                         .description {
-                            // cursor: pointer;
                             font-size: 12px;
                             grid-column: 2/-1;
                             width: 100%;
                             color: rgba(0, 0, 0, 0.479);
+
+                            max-height: 300px;
+                            height: 100%;
+
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                         }
 
                         .date {
@@ -628,9 +684,22 @@ $poppins: 'Poppins', sans-serif;
             }
 
             .title {
+                font-family: $heading-font;
                 padding-bottom: 16px;
                 text-align: center;
                 text-transform: uppercase;
+
+                max-height: 300px;
+                height: 100%;
+
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
+                line-clamp: 3;
+
+                word-break: break-word;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .addButton {
@@ -811,7 +880,7 @@ $poppins: 'Poppins', sans-serif;
                     field-sizing: content;
                     min-height: 20px;
                     /* Sets the base height */
-                    max-height: 100px;
+                    max-height: 200px;
                     // /* Optional: limits maximum height */
                     width: 100%;
                     /* Adjust width as needed */
@@ -824,7 +893,7 @@ $poppins: 'Poppins', sans-serif;
                     border: none;
                     outline: none;
                     font-weight: bold;
-                    font-family: $poppins;
+                    font-family: $main-font;
                     word-wrap: break-word;
                     overflow-wrap: break-word;
                     word-break: break-all;
@@ -835,7 +904,7 @@ $poppins: 'Poppins', sans-serif;
                     }
 
                     &::placeholder {
-                        font-family: $poppins;
+                        font-family: $main-font;
                         font-weight: bold;
                     }
 
@@ -879,7 +948,7 @@ $poppins: 'Poppins', sans-serif;
                 padding: 5px;
                 border: 1px solid rgba(0, 0, 0, 0.2);
                 border-radius: 5px;
-                font-family: $poppins;
+                font-family: $main-font;
                 font-size: 12px;
                 position: relative;
                 background-color: whitesmoke;
@@ -902,7 +971,7 @@ $poppins: 'Poppins', sans-serif;
                     padding: 5px;
                     border: 1px solid rgba(0, 0, 0, 0.2);
                     border-radius: 5px;
-                    font-family: $poppins;
+                    font-family: $main-font;
                     font-size: 12px;
 
                     &:focus {
@@ -932,7 +1001,7 @@ $poppins: 'Poppins', sans-serif;
             // border: 1px solid red;
 
             button {
-                font-family: $poppins;
+                font-family: $main-font;
                 font-size: 14px;
                 width: 100px;
                 height: 35px;

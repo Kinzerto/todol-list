@@ -7,6 +7,7 @@ import { saveChange, deleteDetail, showDetailsForm } from "../index.js";
 import { filterTask } from "../controllers/filterTaskController.js";
 
 import { format } from "date-fns";
+import { countData } from "../controllers/count.js";
 
 
 const projectNames = document.getElementById('project');
@@ -59,8 +60,6 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
             detailsModal.classList.add('active');
             state.currentDivId = task.id;
 
-
-
             showDetailsForm.elements['project'].value = state.currentProjectName.name;
             showDetailsForm.elements['title'].value = task.title;
             showDetailsForm.elements['descrip'].value = task.description || '';
@@ -83,7 +82,7 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
             } else if (due === 'Tomorrow') {
                 date.style.color = 'orange';
                 console.log(dayName);
-            }else if (due === dayName) {
+            } else if (due === dayName) {
                 date.style.color = 'blue';
             }
             else {
@@ -115,4 +114,5 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
             }
         });
     });
+    countData();
 }

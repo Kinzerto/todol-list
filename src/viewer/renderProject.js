@@ -3,10 +3,12 @@ import { Project } from "../models/Project.js";
 import { tasksDisplay } from "../controllers/taskController.js";
 import { state } from "../state.js";
 import { filterTask } from "../controllers/filterTaskController.js";
-import { addedProjects } from "../controllers/projectController.js";
+import { addedProjects, modal, displayProject } from "../controllers/projectController.js";
+
 
 export function renderProject(newProject) {
-    console.log(newProject);
+    
+    if (newProject.name === 'Home') return;
     const DOMButtons = createElement('button', 'project', '', addedProjects);
 
     DOMButtons.dataset.projName = newProject.name;
@@ -26,7 +28,8 @@ export function renderProject(newProject) {
 
     editIcon.addEventListener('click', (e) => {
         e.stopPropagation();
-        console.log(newProject.name);
+        state.editingTaskName = newProject.name
+        modal.classList.add('active');
         console.log(Project.allProjects);
     });
 
@@ -34,11 +37,10 @@ export function renderProject(newProject) {
         console.log('click');
         e.stopPropagation();
         Project.removeProject(newProject.name);
-        state.currentView = 'allTasks';
+        state.currentView = 'home';
+        displayProject()
         filterTask()
-        DOMButtons.remove();
         console.log(Project.allProjects);
-
     })
 
     DOMButtons.addEventListener('click', () => {

@@ -1,5 +1,5 @@
 import { Project } from "../models/Project.js";
-import { compareAsc, format, differenceInYears, differenceInCalendarDays, isTomorrow, isToday } from "date-fns";
+import { format, differenceInYears, differenceInCalendarDays, isTomorrow, isToday } from "date-fns";
 
 export function createElement(element, className, text, parent) {
     const el = document.createElement(element);
@@ -26,7 +26,7 @@ export function formatSmartDate(dateInput) {
     const date = new Date(dateInput);
     const today = new Date();
 
-    const diffDays = differenceInCalendarDays(date, today);
+
 
     if (isToday(date)) {
         return 'Today';
@@ -36,6 +36,7 @@ export function formatSmartDate(dateInput) {
         return 'Tomorrow';
     }
 
+    const diffDays = differenceInCalendarDays(date, today);
     if (diffDays > 1 && diffDays <= 6) {
         return format(date, 'EEEE'); // Wednesday
     }
@@ -43,6 +44,6 @@ export function formatSmartDate(dateInput) {
     if (differenceInYears(date, today) >= 1) {
         return format(date, 'd MMM yyyy');
     }
-    
+
     return format(date, 'd MMM');
 }

@@ -12,6 +12,38 @@ export class Project {
         Project.#allProjects[name] = this;
     }
 
+    static renameProject(oldName, newName) {
+        if (!oldName || !newName) return false;
+
+        const project = Project.#allProjects[oldName];
+
+        if (!project) {
+            console.error(`Project "${oldName}" not found`);
+            return false;
+        }
+
+        if (Project.#allProjects[newName]) {
+            console.error(`Project "${newName}" already exists`);
+            return false;
+        }
+
+        const updatedProjects = {};
+
+        for (const key in Project.#allProjects) {
+            if (key === oldName) {
+                updatedProjects[newName] = project;
+            } else {
+                updatedProjects[key] = Project.#allProjects[key];
+            }
+        }
+
+        Project.#allProjects = updatedProjects;
+
+        project.name = newName;
+
+        return true;
+    }
+
     static removeProject(projectName) {
         if (Project.#allProjects[projectName]) {
             delete Project.#allProjects[projectName];
