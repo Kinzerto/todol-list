@@ -4,5 +4,5 @@ export const state = {
    adding : null,
    currentDivId : null,
    currentProjectName : null,
-   currentView: 'project',
+   currentView: null,
 }

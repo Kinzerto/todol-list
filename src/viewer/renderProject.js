@@ -7,7 +7,6 @@ import { addedProjects, modal, displayProject } from "../controllers/projectCont
 
 
 export function renderProject(newProject) {
-    
     if (newProject.name === 'Home') return;
     const DOMButtons = createElement('button', 'project', '', addedProjects);
 
@@ -29,6 +28,7 @@ export function renderProject(newProject) {
     editIcon.addEventListener('click', (e) => {
         e.stopPropagation();
         state.editingTaskName = newProject.name
+        state.currentProject = newProject;
         modal.classList.add('active');
         console.log(Project.allProjects);
     });
@@ -45,6 +45,8 @@ export function renderProject(newProject) {
 
     DOMButtons.addEventListener('click', () => {
         state.currentProject = newProject
+        console.log(state.currentProject);
+        // console.log('clcik');
         tasksDisplay();
     });
 }

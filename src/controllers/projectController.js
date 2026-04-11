@@ -77,7 +77,7 @@ form.addEventListener('submit', (e) => {
     const val = inputNewProject.value;
     if (state.editingTaskName) {
         Project.renameProject(state.editingTaskName, val);
-        renderTasks()
+        renderTasks();
         state.editingTaskName = null
     } else {
         createProject(val);

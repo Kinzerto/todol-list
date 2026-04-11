@@ -15,7 +15,6 @@ const projectNames = document.getElementById('project');
 
 export function renderTasks(taskList = state.currentProject.showList, parentContainer = tasks, hideAddBtn = false) {
     parentContainer.replaceChildren(); // clear container
-
     if (hideAddBtn === false) {
         state.currentProjectName = state.currentProject.name;
         addButton.replaceChildren();
