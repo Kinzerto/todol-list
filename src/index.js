@@ -9,6 +9,7 @@ import { findProjectNameByTaskId } from './utils/tools.js';
 import { AddTask } from './models/Tasks.js';
 import { displayProject } from './controllers/projectController.js';
 import { countData } from './controllers/count.js';
+import { format } from 'date-fns';
 
 const content = document.querySelector('.content');
 const wrapper = content.querySelector('.wrapper');
@@ -18,14 +19,13 @@ export const tasks = wrapper.querySelector('.tasks');
 export const addButton = wrapper.querySelector('.addButton');
 
 document.addEventListener('DOMContentLoaded', function display() {
-    state.currentView = 'today';
+    state.currentView = 'home';
     displayProject();
     countData();
     filterTask();
 });
 
-
-const projectNames = document.getElementById('project');
+export const projectNames = document.getElementById('project');
 
 const primary = document.querySelector('.primaryButton');
 
@@ -40,30 +40,13 @@ primary.addEventListener('click', (e) => {
         case 'add':
             deleteDetail.textContent = 'Cancel'
             showDetailsForm.reset();
-            if (state.currentView === 'today') {
-                showDetailsForm.elements['date'].value = new Date().toISOString().split('T')[0];
-            } else if (state.currentView === 'important') {
-                showDetailsForm.elements['priority'].value = 'high';
-            } else if (state.currentView === 'project') {
-                console.log(state.currentProject);
-                showDetailsForm.elements['project'].value = 'test';
-            }
             detailsModal.classList.add('active');
             saveChange.textContent = 'Add Task'
             state.adding = true
             projectNames.replaceChildren();
 
-            for (let key in Project.allProjects) {
-                const option = document.createElement('option');
-                option.value = key;
-                option.textContent = key;
-                projectNames.appendChild(option);
-            }
-            if (state.currentView === 'project') {
-                renderTasks()
-            } else {
-                filterTask()
-            }
+            formatInput();
+
             break;
 
         case 'home':
@@ -95,8 +78,27 @@ primary.addEventListener('click', (e) => {
         default:
             break;
     }
+
+
 })
 
+export function formatInput() {
+    for (let key in Project.allProjects) {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = key;
+        projectNames.appendChild(option);
+    }
+    if (state.currentView === 'today') {
+        showDetailsForm.elements['date'].value = format(new Date(), 'yyyy-MM-dd');
+
+    } else if (state.currentView === 'important') {
+        showDetailsForm.elements['priority'].value = 'high';
+
+    } else if (state.currentView === 'project' && state.currentProject) {
+        showDetailsForm.elements['project'].value = state.currentProjectName;
+    }
+}
 
 const detailsModal = document.querySelector('.detailsModal');
 const detailsContent = detailsModal.querySelector('.modal-content');
@@ -123,6 +125,7 @@ showDetailsForm.addEventListener('submit', (e) => {
     const to = formDataDetail.get("project");
 
     const inputData = {
+        project: formDataDetail.get("project"),
         title: formDataDetail.get("title"),
         description: formDataDetail.get("descrip"),
         dueDate: formDataDetail.get("date"),
