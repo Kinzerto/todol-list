@@ -6,6 +6,7 @@ import { filterTask } from "../controllers/filterTaskController.js";
 import { addedProjects, modal, displayProject } from "../controllers/projectController.js";
 import { addButton } from "../index.js";
 import { addTaskModalContainer } from "../controllers/taskController.js";
+import {countData } from "../controllers/count.js";
 
 
 export function renderProject(newProject) {
@@ -43,6 +44,7 @@ export function renderProject(newProject) {
         addButton.classList.remove('hideAddButton');
         displayProject();
         filterTask();
+        countData()
         console.log(Project.allProjects);
     })
 
