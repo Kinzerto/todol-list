@@ -184,6 +184,7 @@ deleteDetail.addEventListener('click', (e) => {
         }
     }
     detailsModal.classList.remove('active');
+    countData()
 
 });
 
