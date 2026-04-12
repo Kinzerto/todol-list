@@ -3,9 +3,9 @@ import { state } from "../state.js";
 import { tasks, addButton } from '../index.js';
 import { renderTasks } from "../viewer/renderTasks.js";
 
-const addTaskModalContainer = document.getElementById('addTaskModalContainer');
+export const addTaskModalContainer = document.getElementById('addTaskModalContainer');
 const cancel = document.getElementById('cancel');
-const addTaskForm = document.querySelector('.AddTaskForm');
+export const addTaskForm = document.querySelector('.AddTaskForm');
 
 export function tasksDisplay() {
     if (!state.currentProject) return;

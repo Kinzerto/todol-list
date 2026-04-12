@@ -8,6 +8,8 @@ import { compareAsc, isToday } from "date-fns";
 
 export function filterTask() {
     // console.log(state.currentProject);
+    addTaskModalContainer.classList.remove('show')
+    addButton.classList.remove('hideAddButton');
     tasks.replaceChildren();
     headerTitle.textContent = state.currentView === 'allTasks' ? 'all tasks' : state.currentView;
     addButton.replaceChildren();

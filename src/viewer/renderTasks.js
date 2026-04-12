@@ -5,17 +5,21 @@ import { tasks, addButton, headerTitle } from "../index.js";
 import { Project } from "../models/Project.js";
 import { saveChange, deleteDetail, showDetailsForm } from "../index.js";
 import { filterTask } from "../controllers/filterTaskController.js";
-
+import { addTaskModalContainer } from "../controllers/taskController.js";
 import { format } from "date-fns";
 import { countData } from "../controllers/count.js";
-
+import { addTaskForm } from "../controllers/taskController.js";
 
 const projectNames = document.getElementById('project');
 
-
+//function for rendering app
 export function renderTasks(taskList = state.currentProject.showList, parentContainer = tasks, hideAddBtn = false) {
     parentContainer.replaceChildren(); // clear container
-    if (hideAddBtn === false) {
+    addTaskModalContainer.classList.remove('show')
+    addButton.classList.remove('hideAddButton');
+    addTaskForm.reset()
+    if (!hideAddBtn) {
+        addButton.replaceChildren();
         state.currentProjectName = state.currentProject.name;
         addButton.replaceChildren();
         headerTitle.textContent = state.currentProject.name;
@@ -32,6 +36,7 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
 
         taskList = taskList.filter((task) => !task.completed)
     }
+
 
     taskList.forEach((task) => {
         const allTasks = createElement('div', 'allTasks', '', parentContainer);
@@ -102,6 +107,7 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
 
         //radio button to toggle task completion
         radio.addEventListener('click', (e) => {
+            countData();
             e.stopPropagation();
             const state = findProjectNameByTaskId(task.id);
             console.log(state);
@@ -111,6 +117,7 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
             } else {
                 filterTask()
             }
+            countData();
         });
     });
     countData();

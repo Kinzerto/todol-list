@@ -4,6 +4,7 @@ import { AddTask } from "../models/Tasks.js"//delete later
 import { renderProject } from "../viewer/renderProject.js";
 import { state } from "../state.js";
 import { renderTasks } from "../viewer/renderTasks.js";
+import { filterTask } from "./filterTaskController.js";
 // this Elmemt  shows ALL you projects you input(PS: its a container/wrapper) 
 export const addedProjects = document.querySelector('.addedProjects');
 
@@ -20,7 +21,6 @@ export function displayProject() {
     const proj = Project.allProjects;
     for (let key in proj) {
         renderProject(proj[key]);
-        // console.log(proj[key]);
     }
 }
 
@@ -71,14 +71,19 @@ overlay.addEventListener('click', () => {
 });
 
 // a form modal that submits what you type and send it to function createProject 
-// function fromSub() {
+
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     const val = inputNewProject.value;
     if (state.editingTaskName) {
         Project.renameProject(state.editingTaskName, val);
-        renderTasks();
-        state.editingTaskName = null
+        if (state.currentView === 'project') {
+            renderTasks()
+        } else {
+            filterTask()
+        }
+        console.log(state.currentView);
+        state.editingTaskName = null;
     } else {
         createProject(val);
     }

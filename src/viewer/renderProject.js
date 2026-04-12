@@ -4,6 +4,8 @@ import { tasksDisplay } from "../controllers/taskController.js";
 import { state } from "../state.js";
 import { filterTask } from "../controllers/filterTaskController.js";
 import { addedProjects, modal, displayProject } from "../controllers/projectController.js";
+import { addButton } from "../index.js";
+import { addTaskModalContainer } from "../controllers/taskController.js";
 
 
 export function renderProject(newProject) {
@@ -30,7 +32,6 @@ export function renderProject(newProject) {
         state.editingTaskName = newProject.name
         state.currentProject = newProject;
         modal.classList.add('active');
-        console.log(Project.allProjects);
     });
 
     deleteIcon.addEventListener('click', (e) => {
@@ -38,15 +39,17 @@ export function renderProject(newProject) {
         e.stopPropagation();
         Project.removeProject(newProject.name);
         state.currentView = 'home';
-        displayProject()
-        filterTask()
+        addTaskModalContainer.classList.remove('show');
+        addButton.classList.remove('hideAddButton');
+        displayProject();
+        filterTask();
         console.log(Project.allProjects);
     })
 
     DOMButtons.addEventListener('click', () => {
         state.currentProject = newProject
         console.log(state.currentProject);
-        // console.log('clcik');
+        
         tasksDisplay();
     });
 }
