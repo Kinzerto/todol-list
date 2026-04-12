@@ -18,11 +18,12 @@ export const tasks = wrapper.querySelector('.tasks');
 export const addButton = wrapper.querySelector('.addButton');
 
 document.addEventListener('DOMContentLoaded', function display() {
-    state.currentView = 'home';
+    state.currentView = 'today';
     displayProject();
     countData();
     filterTask();
 });
+
 
 const projectNames = document.getElementById('project');
 
@@ -39,6 +40,14 @@ primary.addEventListener('click', (e) => {
         case 'add':
             deleteDetail.textContent = 'Cancel'
             showDetailsForm.reset();
+            if (state.currentView === 'today') {
+                showDetailsForm.elements['date'].value = new Date().toISOString().split('T')[0];
+            } else if (state.currentView === 'important') {
+                showDetailsForm.elements['priority'].value = 'high';
+            } else if (state.currentView === 'project') {
+                console.log(state.currentProject);
+                showDetailsForm.elements['project'].value = 'test';
+            }
             detailsModal.classList.add('active');
             saveChange.textContent = 'Add Task'
             state.adding = true
@@ -64,6 +73,7 @@ primary.addEventListener('click', (e) => {
 
         case 'todayTask':
             state.currentView = 'today';
+
             filterTask();
             break;
 
@@ -157,6 +167,7 @@ showDetailsForm.addEventListener('submit', (e) => {
         );
 
         Project.addTask(to, newTask);
+        countData();
     }
 
     // 🔄 Re-render

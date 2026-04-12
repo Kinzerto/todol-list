@@ -10,6 +10,7 @@ import {countData } from "../controllers/count.js";
 
 
 export function renderProject(newProject) {
+    
     if (newProject.name === 'Home') return;
     const DOMButtons = createElement('button', 'project', '', addedProjects);
 
@@ -36,7 +37,6 @@ export function renderProject(newProject) {
     });
 
     deleteIcon.addEventListener('click', (e) => {
-        console.log('click');
         e.stopPropagation();
         Project.removeProject(newProject.name);
         state.currentView = 'home';
@@ -45,13 +45,10 @@ export function renderProject(newProject) {
         displayProject();
         filterTask();
         countData()
-        console.log(Project.allProjects);
     })
 
     DOMButtons.addEventListener('click', () => {
         state.currentProject = newProject
-        console.log(state.currentProject);
-        
         tasksDisplay();
     });
 }

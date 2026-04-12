@@ -1,10 +1,9 @@
-import emptyState from '../assets/images/folder.png'
 import { tasks, addButton, headerTitle } from '../index.js';
 import { Project } from '../models/Project.js';
 import { state } from '../state.js';
 import { renderFilteredTask } from '../viewer/renderFilteredTask.js';
 import { compareAsc, isToday } from "date-fns";
-
+import folder from '../assets/images/folder.png';
 
 export function filterTask() {
     // console.log(state.currentProject);
@@ -16,6 +15,7 @@ export function filterTask() {
 
     const projects = Project.allProjects;
     let filtered = null
+    let hasResults = false
     for (const [projectName, project] of Object.entries(projects)) {
 
         // ✅ filter ONLY this project's completed tasks
@@ -27,7 +27,6 @@ export function filterTask() {
             filtered = project.showList.filter(task => !task.completed);
         } else if (state.currentView === 'today') {
             filtered = project.showList.filter((task) => {
-                // console.log(task.due);
                 return !task.completed && task.dueDate && isToday(new Date(task.dueDate));
             });
         } else if (state.currentView === 'upcoming') {
@@ -35,10 +34,16 @@ export function filterTask() {
                 .filter(task => !task.completed && task.dueDate && !isToday(new Date(task.dueDate)))
                 .sort((a, b) => compareAsc(new Date(a.dueDate), new Date(b.dueDate)));
         }
-
         // ❗ skip empty projects
-        if (filtered.length === 0) continue;
+        if (filtered.length === 0)continue;
+        hasResults = true;
         renderFilteredTask(projectName, filtered);
+    }
+    console.log(hasResults);
+    if (!hasResults) {
+        const img = document.createElement('img');
+        img.src = folder;
+        tasks.appendChild(img);
     }
 
 }

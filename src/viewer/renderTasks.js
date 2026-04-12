@@ -14,7 +14,9 @@ const projectNames = document.getElementById('project');
 
 //function for rendering app
 export function renderTasks(taskList = state.currentProject.showList, parentContainer = tasks, hideAddBtn = false) {
+
     parentContainer.replaceChildren(); // clear container
+
     addTaskModalContainer.classList.remove('show')
     addButton.classList.remove('hideAddButton');
     addTaskForm.reset()
@@ -51,10 +53,8 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
             saveChange.textContent = 'Update'
             deleteDetail.textContent = 'Delete'
             state.adding = false
-            console.log(taskWrap.dataset.id);
             projectNames.replaceChildren();
             state.currentProjectName = findProjectNameByTaskId(taskWrap.dataset.id);
-            console.log(state.currentProjectName);
             for (let key in Project.allProjects) {
                 const option = document.createElement('option');
                 option.value = key;
@@ -63,7 +63,7 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
             }
             detailsModal.classList.add('active');
             state.currentDivId = task.id;
-
+            
             showDetailsForm.elements['project'].value = state.currentProjectName.name;
             showDetailsForm.elements['title'].value = task.title;
             showDetailsForm.elements['descrip'].value = task.description || '';
@@ -85,7 +85,6 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
                 date.style.color = 'green';
             } else if (due === 'Tomorrow') {
                 date.style.color = 'orange';
-                console.log(dayName);
             } else if (due === dayName) {
                 date.style.color = 'blue';
             }
@@ -110,7 +109,6 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
             countData();
             e.stopPropagation();
             const state = findProjectNameByTaskId(task.id);
-            console.log(state);
             state.toggleTaskCompletion(task.id)
             if (!hideAddBtn) {
                 renderTasks()

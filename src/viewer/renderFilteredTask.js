@@ -1,8 +1,10 @@
 import { createElement } from '../utils/tools.js';
 import { renderTasks } from './renderTasks.js';
 import { tasks } from '../index.js';
+import { state } from '../state.js';
+
 export function renderFilteredTask(projectName, filtered) {
-    console.log(filtered);
+    state.isEmpty = false;
     const section = createElement('div', 'projectSection', '', tasks);
     section.dataset.project = projectName; // for potential future use
 
