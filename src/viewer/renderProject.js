@@ -48,7 +48,8 @@ export function renderProject(newProject) {
     })
 
     DOMButtons.addEventListener('click', () => {
-        state.currentProject = newProject
+        state.currentProject = newProject;
+        console.log(newProject.toJSON());
         tasksDisplay();
     });
 }

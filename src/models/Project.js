@@ -77,7 +77,6 @@ export class Project {
         if (index === -1) return null;
 
         const [task] = this.#tasks.splice(index, 1);
-        console.log(task);
         return task;
 
     }
@@ -116,5 +115,12 @@ export class Project {
 
     static get allProjects() {
         return Project.#allProjects;
+    }
+
+    toJSON() {
+        return {
+            name: this.name,
+            tasks: this.#tasks
+        };
     }
 }

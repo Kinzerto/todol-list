@@ -2,6 +2,7 @@ import { createElement } from '../utils/tools.js';
 import { renderTasks } from './renderTasks.js';
 import { tasks } from '../index.js';
 import { state } from '../state.js';
+import { Project } from '../models/Project.js';
 
 export function renderFilteredTask(projectName, filtered) {
     state.isEmpty = false;

@@ -5,6 +5,7 @@ import { renderProject } from "../viewer/renderProject.js";
 import { state } from "../state.js";
 import { renderTasks } from "../viewer/renderTasks.js";
 import { filterTask } from "./filterTaskController.js";
+import { saveProjects } from "./localStorage.js";
 // this Elmemt  shows ALL you projects you input(PS: its a container/wrapper) 
 export const addedProjects = document.querySelector('.addedProjects');
 
@@ -12,7 +13,7 @@ export const addedProjects = document.querySelector('.addedProjects');
 export function createProject(name) {
     if (!name) return;
     const newProject = new Project(name);
-
+    
     return newProject;
 }
 
@@ -22,19 +23,10 @@ export function displayProject() {
     for (let key in proj) {
         renderProject(proj[key]);
     }
+    
 }
 
-createProject('Home');
-const testProject = createProject('Test 1');
-const testProject2 = createProject('Test 2');
-
-testProject.addTask(new AddTask('Task 1', 'desc 1', '', 'high', true));
-
-testProject.addTask(new AddTask('Task 2', 'desc 2', '', 'high'));
-testProject.addTask(new AddTask('Task 3', 'desc 3', '', ''));
-
-testProject2.addTask(new AddTask('Task 4', 'desc 4', '', 'high'));
-testProject2.addTask(new AddTask('Task 5', 'desc 5', '', '', true));
+// createProject('Home');
 
 export const openModal = document.getElementById('openModal');
 export const modal = document.getElementById('modal');
@@ -89,6 +81,7 @@ form.addEventListener('submit', (e) => {
     }
     displayProject();
     form.reset();
+    saveProjects();
     modal.classList.remove('active');
 });
 // }

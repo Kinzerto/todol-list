@@ -43,7 +43,6 @@ export function filterTask() {
         hasResults = true;
         renderFilteredTask(projectName, filtered);
     }
-    console.log(hasResults);
     if (!hasResults && state.currentView !== 'completed') {
         const emptyStateDiv = createElement('div', 'empty_state', '', tasks);
         const iconFace = createElement('span', 'material-symbols-outlined', 'sentiment_content', emptyStateDiv);

@@ -2,6 +2,7 @@ import { AddTask } from "../models/Tasks.js"
 import { state } from "../state.js";
 import { tasks, addButton } from '../index.js';
 import { renderTasks } from "../viewer/renderTasks.js";
+import { saveProjects } from "./localStorage.js";
 
 export const addTaskModalContainer = document.getElementById('addTaskModalContainer');
 const cancel = document.getElementById('cancel');
@@ -40,6 +41,7 @@ addTaskForm.addEventListener('submit', function (e) {
     addTaskModalContainer.classList.remove('show');
     addTaskForm.reset();
     addButton.classList.remove('hideAddButton');
+    saveProjects();
 });
 
 // Cancel button in Add Task Modal

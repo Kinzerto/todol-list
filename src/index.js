@@ -10,6 +10,7 @@ import { AddTask } from './models/Tasks.js';
 import { displayProject } from './controllers/projectController.js';
 import { countData } from './controllers/count.js';
 import { format } from 'date-fns';
+import { saveProjects } from './controllers/localStorage.js';
 
 const content = document.querySelector('.content');
 const wrapper = content.querySelector('.wrapper');
@@ -171,6 +172,7 @@ showDetailsForm.addEventListener('submit', (e) => {
 
         Project.addTask(to, newTask);
         countData();
+        saveProjects();
     }
 
     // 🔄 Re-render
@@ -182,6 +184,7 @@ showDetailsForm.addEventListener('submit', (e) => {
 
     // close modal
     countData();
+    // saveProjects();
     detailsModal.classList.remove('active');
 
 });
@@ -200,6 +203,7 @@ deleteDetail.addEventListener('click', (e) => {
     }
     detailsModal.classList.remove('active');
     countData();
+    saveProjects();
 
 });
 

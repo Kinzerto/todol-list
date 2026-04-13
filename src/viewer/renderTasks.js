@@ -14,7 +14,7 @@ const projectNames = document.getElementById('project');
 
 //function for rendering app
 export function renderTasks(taskList = state.currentProject.showList, parentContainer = tasks, hideAddBtn = false) {
-
+    // console.log(state.currentProject.toJSON());
     parentContainer.replaceChildren(); // clear container
 
     addTaskModalContainer.classList.remove('show')
