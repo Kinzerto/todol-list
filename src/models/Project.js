@@ -1,15 +1,18 @@
-
+//  THIS CLASS CREATES PROJECT INSTANCES TO USE ITS METHOD 
 export class Project {
     static #allProjects = {};
     #tasks = [];
     constructor(name) {
         if (!name) throw new Error('Project name required');
-        if (Project.#allProjects[name]) {
-            throw new Error('Project already exists');
-        }
 
         this.name = name;
         Project.#allProjects[name] = this;
+    }
+
+
+    // STATICS 
+    static clearAll() {
+        Project.#allProjects = {};
     }
 
     static renameProject(oldName, newName) {
@@ -82,8 +85,8 @@ export class Project {
     }
 
     moveTask(taskId, fromName, toName, updatedData) {
-        const from = Project.allProjects[fromName];
-        const to = Project.allProjects[toName];
+        const from = Project.#allProjects[fromName];
+        const to = Project.#allProjects[toName];
 
         if (!from || !to) return;
 
