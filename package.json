@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
+    "merge": "git checkout gh-pages && git merge main --no-edit",
     "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
