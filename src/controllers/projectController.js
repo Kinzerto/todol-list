@@ -23,10 +23,9 @@ export function displayProject() {
     for (let key in proj) {
         renderProject(proj[key]);
     }
-    
 }
 
-// createProject('Home');
+createProject('Home');
 
 export const openModal = document.getElementById('openModal');
 export const modal = document.getElementById('modal');
