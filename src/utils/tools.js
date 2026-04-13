@@ -1,5 +1,5 @@
 import { Project } from "../models/Project.js";
-import { format, differenceInYears, differenceInCalendarDays, isTomorrow, isToday } from "date-fns";
+import { format, differenceInYears, differenceInCalendarDays, isTomorrow, isToday, isBefore, startOfDay } from "date-fns";
 
 export function createElement(element, className, text, parent) {
     const el = document.createElement(element);
@@ -34,6 +34,10 @@ export function formatSmartDate(dateInput) {
 
     if (isTomorrow(date)) {
         return 'Tomorrow';
+    }
+
+    if (isBefore(startOfDay(date), startOfDay(today))) {
+        return 'Overdue'
     }
 
     const diffDays = differenceInCalendarDays(date, today);
