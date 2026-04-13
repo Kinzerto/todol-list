@@ -181,6 +181,7 @@ showDetailsForm.addEventListener('submit', (e) => {
     }
 
     // close modal
+    countData();
     detailsModal.classList.remove('active');
 
 });
@@ -198,7 +199,7 @@ deleteDetail.addEventListener('click', (e) => {
         }
     }
     detailsModal.classList.remove('active');
-    countData()
+    countData();
 
 });
 
