@@ -8,9 +8,9 @@ import { renderTasks } from "./viewer/renderTasks.js";
 import { findProjectNameByTaskId } from './utils/tools.js';
 import { AddTask } from './models/Tasks.js';
 import { displayProject } from './controllers/projectController.js';
-import { countData } from './controllers/count.js';
 import { format } from 'date-fns';
 import { saveProjects } from './controllers/localStorage.js';
+import { renderCount } from './viewer/renderCount.js';
 
 const content = document.querySelector('.content');
 const wrapper = content.querySelector('.wrapper');
@@ -22,7 +22,7 @@ export const addButton = wrapper.querySelector('.addButton');
 document.addEventListener('DOMContentLoaded', function display() {
     state.currentView = 'home';
     displayProject();
-    countData();
+    renderCount();
     filterTask();
 });
 
@@ -171,7 +171,7 @@ showDetailsForm.addEventListener('submit', (e) => {
         );
 
         Project.addTask(to, newTask);
-        countData();
+        renderCount();
         saveProjects();
     }
 
@@ -183,8 +183,8 @@ showDetailsForm.addEventListener('submit', (e) => {
     }
 
     // close modal
-    countData();
-    // saveProjects();
+    renderCount();
+    saveProjects();
     detailsModal.classList.remove('active');
 
 });
@@ -202,7 +202,7 @@ deleteDetail.addEventListener('click', (e) => {
         }
     }
     detailsModal.classList.remove('active');
-    countData();
+    renderCount();
     saveProjects();
 
 });
