@@ -1,41 +1,8 @@
 import { Project } from "../models/Project.js";
 import { compareAsc, isToday } from "date-fns";
 
-export const count = document.querySelectorAll('.primaryButton button .count');
-// let current = null;
-export function countData() {
-    count.forEach((cn) => {
-        // console.log(cn.classList[0]);
-        // cn.replaceChildren()
-        switch (cn.classList[0]) {
-            case 'homeCount':
-                cn.textContent = countFilter('homeCount')
-                break;
 
-            case 'todayCount':
-                cn.textContent = countFilter('todayCount')
-                cn.style.color = 'red';
-                break;
-
-            case 'upcomingCount':
-                cn.textContent = countFilter('upcomingCount')
-                break;
-
-            case 'importantCount':
-                cn.textContent = countFilter('importantCount')
-                break;
-
-            case 'completedCount':
-                cn.textContent = countFilter('completedCount')
-                break;
-
-            default:
-                break;
-        }
-    });
-}
-
-function countFilter(current) {
+export function countFilter(current) {
     const projects = Project.allProjects;
     let filtered = null;
     let combined = [];
