@@ -6,6 +6,8 @@ import { state } from "../state.js";
 import { renderTasks } from "../viewer/renderTasks.js";
 import { filterTask } from "./filterTaskController.js";
 import { saveProjects } from "./localStorage.js";
+import { addDays, format } from 'date-fns';
+
 // this Elmemt  shows ALL you projects you input(PS: its a container/wrapper) 
 export const addedProjects = document.querySelector('.addedProjects');
 
@@ -13,7 +15,7 @@ export const addedProjects = document.querySelector('.addedProjects');
 export function createProject(name) {
     if (!name) return;
     const newProject = new Project(name);
-    
+
     return newProject;
 }
 
@@ -26,6 +28,8 @@ export function displayProject() {
 }
 
 createProject('Home');
+GettingStarted();
+
 
 export const openModal = document.getElementById('openModal');
 export const modal = document.getElementById('modal');
@@ -83,4 +87,30 @@ form.addEventListener('submit', (e) => {
     saveProjects();
     modal.classList.remove('active');
 });
-// }
+
+function GettingStarted() {
+
+    const daily = createProject('Daily');
+    const dateNow = new Date();
+    const dailyFormat = format(dateNow, "yyyy-MM-dd");
+
+    daily.addTask(new AddTask('Walk Waffle', 'Walk my dog name Waffle that is so cute', dailyFormat, 'high', '', '3'));
+
+    daily.addTask(new AddTask('Go to Gym', 'Workout for Chest Day', dailyFormat, '', '', '4'));
+
+
+    const school = createProject('School');
+    const sevenDay = addDays(new Date(), 7);
+    const seven = format(sevenDay, "yyyy-MM-dd");
+
+    const tomorrow = addDays(new Date(), 1);
+    const formatTom = format(tomorrow, "yyyy-MM-dd");
+
+    school.addTask(new AddTask('Make Presentation', 'Presentation about Bears(Griz, Panda, Ice Bear)', formatTom, 'high', '', '1'));
+
+    school.addTask(new AddTask('Exam Review', 'Review notes for upcoming Exam', seven, 'medium', '', '2'));
+
+
+
+}
+console.log('djdj');
