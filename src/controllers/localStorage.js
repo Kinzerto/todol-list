@@ -10,21 +10,33 @@ export function saveProjects() {
 }
 
 export function loadProject() {
-    const load = localStorage.getItem('projects');
 
+    const load = localStorage.getItem('projects');
+    if (!load) return;
     const data = JSON.parse(load);
     console.log(data);
-
-    for(const name in data){
-        const project = new Project(name)
+    Project.clearAll();
+    for (const name in data) {
+        const project = new Project(name);
         // ();
         data[name].tasks.forEach(task => {
-            console.log(Object.values(task));
+            // project.addTask(Object.values(task));
+            project.addTask(
+                new AddTask(
+                    task.title,
+                    task.description,
+                    task.dueDate,
+                    task.priority,
+                    task.completed,
+                    task.id
+                )
+            );
+
         });
-        
+
         // project.addTask(new AddTask())
     }
-    
+
 }
 
 console.log(loadProject());
