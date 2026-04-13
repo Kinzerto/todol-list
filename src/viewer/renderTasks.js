@@ -7,8 +7,9 @@ import { saveChange, deleteDetail, showDetailsForm } from "../index.js";
 import { filterTask } from "../controllers/filterTaskController.js";
 import { addTaskModalContainer } from "../controllers/taskController.js";
 import { format } from "date-fns";
-import { countData } from "../controllers/count.js";
 import { addTaskForm } from "../controllers/taskController.js";
+import { saveProjects } from "../controllers/localStorage.js";
+import { renderCount } from "./renderCount.js";
 
 const projectNames = document.getElementById('project');
 
@@ -108,7 +109,7 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
 
         //radio button to toggle task completion
         radio.addEventListener('click', (e) => {
-            countData();
+            renderCount();
             e.stopPropagation();
             const state = findProjectNameByTaskId(task.id);
             state.toggleTaskCompletion(task.id)
@@ -117,8 +118,9 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
             } else {
                 filterTask()
             }
-            countData();
+            renderCount();
+            saveProjects();
         });
     });
-    countData();
+    renderCount();
 }
