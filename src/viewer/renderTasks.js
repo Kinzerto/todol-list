@@ -87,6 +87,8 @@ export function renderTasks(taskList = state.currentProject.showList, parentCont
                 date.style.color = 'orange';
             } else if (due === dayName) {
                 date.style.color = 'blue';
+            } else if(due === 'Overdue'){
+                date.style.color = 'red';
             }
             else {
                 date.style.color = 'color: rgba(0, 0, 0, 0.479)';
