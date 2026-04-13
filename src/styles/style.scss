@@ -3,7 +3,7 @@
 $black: #252525;
 $purple: #6C63FF;
 $white: #F7F7F7;
-$sidebar: #d5d5d51d;
+$sidebar: #F2EAE0 ;
 // $main-font: Poppins;
 $main-font: "Montserrat", sans-serif;
 $heading-font: "Orbitron", sans-serif;
@@ -262,6 +262,7 @@ $heading-font: "Orbitron", sans-serif;
     }
 
     .content {
+        
         justify-self: center;
         grid-area: content;
         position: relative;
@@ -519,7 +520,7 @@ $heading-font: "Orbitron", sans-serif;
                     position: relative;
                     display: grid;
                     row-gap: 8px;
-                    border-top: 2px solid rgba(16, 159, 225, 0.203);
+                    border-top: 2px solid #B4D3D9;
 
                     &.collapsed {
 
