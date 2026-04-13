@@ -44,8 +44,7 @@ export function filterTask() {
         renderFilteredTask(projectName, filtered);
     }
     console.log(hasResults);
-    if (!hasResults) {
-
+    if (!hasResults && state.currentView !== 'completed') {
         const emptyStateDiv = createElement('div', 'empty_state', '', tasks);
         const iconFace = createElement('span', 'material-symbols-outlined', 'sentiment_content', emptyStateDiv);
         const emptyText = createElement('p', 'empty_text', "You don't have any tasks here yet. Add a new task to get started and stay organized.", emptyStateDiv);
@@ -62,8 +61,6 @@ export function filterTask() {
             saveChange.textContent = 'Add Task'
             state.adding = true
             projectNames.replaceChildren();
-
-
             formatInput();
         });
 
